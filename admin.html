@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MANSABOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Poppins', 'sans-serif'] }, colors: { mansabot: { light: '#e0f2fe', DEFAULT: '#0ea5e9', dark: '#0369a1' } } } } }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
+        .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 4px; }
+        #login-screen { transition: opacity 0.5s ease, visibility 0.5s ease; } .fade-out { opacity: 0; visibility: hidden; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800">
+
+    <!-- LOGIN -->
+    <div id="login-screen" class="fixed inset-0 z-[100] bg-slate-50 flex items-center justify-center">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl border w-full max-w-md text-center">
+            <div class="w-20 h-20 bg-mansabot text-white flex items-center justify-center rounded-full shadow-lg mx-auto mb-6 text-4xl"><i class="fa-solid fa-lock"></i></div>
+            <h2 class="text-3xl font-extrabold text-mansabot-dark mb-2">Login Admin</h2>
+            <form id="form-login" onsubmit="window.prosesLogin(event)" class="space-y-5 text-left mt-6">
+                <div><label class="block text-sm font-bold mb-1">Username</label><input type="text" id="login-username" required class="w-full px-4 py-3 border rounded-xl focus:ring-mansabot"></div>
+                <div><label class="block text-sm font-bold mb-1">Password</label><input type="password" id="login-password" required class="w-full px-4 py-3 border rounded-xl focus:ring-mansabot"></div>
+                <p id="login-error" class="text-red-500 text-xs font-bold hidden text-center">Kredensial salah!</p>
+                <button type="submit" class="w-full bg-mansabot text-white font-bold py-3 rounded-xl shadow-md">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-white shadow-xl z-20 flex flex-col border-r hidden md:flex">
+        <div class="p-6 border-b flex items-center gap-3"><div class="w-10 h-10 bg-mansabot text-white flex items-center justify-center rounded-full shadow-lg"><i class="fa-solid fa-robot"></i></div><h2 class="text-xl font-bold text-mansabot-dark">ADMIN</h2></div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <button onclick="window.switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full text-left px-4 py-3 bg-mansabot text-white font-semibold rounded-xl shadow-md"><i class="fa-solid fa-chart-pie w-6"></i> Dashboard</button>
+            <button onclick="window.switchTab('home')" id="btn-home" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-house w-6"></i> Tampilan Utama</button>
+            <button onclick="window.switchTab('struktur')" id="btn-struktur" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-sitemap w-6"></i> Struktur Organisasi</button>
+            <button onclick="window.switchTab('anggota')" id="btn-anggota" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-users w-6"></i> Kelola Anggota</button>
+            <button onclick="window.switchTab('galeri')" id="btn-galeri" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-images w-6"></i> Galeri & Prestasi</button>
+            <button onclick="window.switchTab('merch')" id="btn-merch" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-shirt w-6"></i> Merchandise</button>
+        </nav>
+        <div class="p-4 border-t"><button onclick="window.logoutAdmin()" class="w-full px-4 py-3 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white font-bold rounded-xl"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button></div>
+    </aside>
+
+    <!-- KONTEN -->
+    <main class="flex-1 overflow-y-auto relative bg-slate-50">
+        <header class="bg-white shadow-sm border-b px-8 py-5 flex justify-between items-center sticky top-0 z-10"><h1 id="page-title" class="text-2xl font-bold">Dashboard</h1><div class="flex items-center space-x-3 bg-mansabot-light px-4 py-2 rounded-full cursor-pointer"><span class="text-mansabot-dark font-semibold text-sm">Halo, Reksa</span><div class="w-8 h-8 bg-mansabot rounded-full flex items-center justify-center text-white font-bold text-sm">R</div></div></header>
+
+        <div class="p-8">
+            <!-- DASHBOARD -->
+            <div id="tab-dashboard" class="tab-content active">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4"><div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-users"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Total Anggota</h3><p id="stat-anggota" class="text-3xl font-bold mt-1">0</p></div></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4"><div class="w-14 h-14 bg-gray-100 text-gray-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-graduation-cap"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Total Alumni</h3><p id="stat-alumni" class="text-3xl font-bold mt-1">0</p></div></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4"><div class="w-14 h-14 bg-green-100 text-green-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-lock"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Kode Kunci</h3><p id="stat-kode" class="text-xl font-bold mt-1">...</p></div></div>
+                </div>
+            </div>
+
+            <!-- TAMPILAN UTAMA -->
+            <div id="tab-home" class="tab-content">
+                <div class="bg-white rounded-2xl shadow-sm border p-8">
+                    <h2 class="text-xl font-bold mb-6 border-b pb-2">Ubah Data Halaman Utama</h2>
+                    <form onsubmit="window.simpanPengaturanUmum(event)" class="space-y-5">
+                        <div><label class="block text-sm font-bold mb-1">Judul Utama</label><input type="text" id="set-judul" class="w-full px-4 py-2 border rounded-lg"></div>
+                        <div><label class="block text-sm font-bold mb-1">Slogan Singkat</label><textarea id="set-desc" rows="3" class="w-full px-4 py-2 border rounded-lg"></textarea></div>
+                        <div><label class="block text-sm font-bold mb-1">URL Gambar Utama</label><input type="text" id="set-img" placeholder="https://..." class="w-full px-4 py-2 border rounded-lg"></div>
+                        <button type="submit" class="bg-mansabot text-white font-bold py-2 px-6 rounded-lg">Simpan ke Server</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- STRUKTUR -->
+            <div id="tab-struktur" class="tab-content">
+                <div class="bg-white rounded-2xl shadow-sm border p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-6 border-b pb-2">Pengurus Inti</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div><label class="block text-sm font-bold mb-1">Pembina</label><input type="text" id="str-pembina" class="w-full px-4 py-2 border rounded-lg"></div>
+                        <div><label class="block text-sm font-bold mb-1">Ketua Umum</label><input type="text" id="str-ketua" class="w-full px-4 py-2 border rounded-lg"></div>
+                        <div><label class="block text-sm font-bold mb-1">Wakil Ketua</label><input type="text" id="str-wakil" class="w-full px-4 py-2 border rounded-lg"></div>
+                        <div><label class="block text-sm font-bold mb-1">Sekretaris</label><input type="text" id="str-sekre" class="w-full px-4 py-2 border rounded-lg"></div>
+                        <div><label class="block text-sm font-bold mb-1">Bendahara</label><input type="text" id="str-benda" class="w-full px-4 py-2 border rounded-lg"></div>
+                    </div>
+                    <button onclick="window.simpanStrukturInti()" class="mt-4 bg-mansabot text-white font-bold py-2 px-6 rounded-lg">Simpan Pengurus Inti</button>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border p-8">
+                    <div class="flex justify-between items-center mb-6 border-b pb-2">
+                        <h2 class="text-xl font-bold">Divisi Tambahan</h2>
+                    </div>
+                    <form onsubmit="window.tambahDivisi(event)" class="flex gap-4 mb-6">
+                        <input type="text" id="div-jabatan" required placeholder="Nama Jabatan (Cth: Humas)" class="flex-1 px-4 py-2 border rounded-lg">
+                        <input type="text" id="div-nama" required placeholder="Nama Anggota" class="flex-1 px-4 py-2 border rounded-lg">
+                        <button type="submit" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg"><i class="fa-solid fa-plus"></i> Tambah</button>
+                    </form>
+                    <div id="list-divisi" class="space-y-4"></div>
+                </div>
+            </div>
+
+            <!-- ANGGOTA CRUD -->
+            <div id="tab-anggota" class="tab-content">
+                <div class="bg-white rounded-2xl shadow-sm border p-6 mb-6 flex justify-between">
+                    <div><h2 class="text-lg font-bold">Kode Pendaftaran</h2><p class="text-sm text-gray-500">Ubah kode rahasia web.</p></div>
+                    <div class="flex items-center gap-2"><input type="text" id="input-kode-ubah" class="px-4 py-2 border rounded-lg font-bold text-center w-32"><button onclick="window.ubahKodeKunci()" class="bg-yellow-400 font-bold py-2 px-4 rounded-lg">Perbarui</button></div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border p-8">
+                    <div class="flex justify-between items-center mb-6"><h2 class="text-xl font-bold">Database Anggota</h2><button onclick="window.openModalTambah()" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg"><i class="fa-solid fa-plus"></i> Tambah Manual</button></div>
+                    <table class="w-full text-left border-collapse">
+                        <thead><tr class="bg-blue-50 border-b"><th class="py-3 px-4">Nama</th><th class="py-3 px-4">Angkatan</th><th class="py-3 px-4">No. WA</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead>
+                        <tbody id="tabel-anggota" class="text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- GALERI & PRESTASI -->
+            <div id="tab-galeri" class="tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-2xl shadow-sm border p-6">
+                        <h2 class="text-xl font-bold mb-4 border-b pb-2"><i class="fa-solid fa-images"></i> Tambah Galeri</h2>
+                        <form onsubmit="window.tambahGaleri(event)" class="mb-4">
+                            <input type="text" id="input_galeri_url" required class="w-full px-3 py-2 border rounded-lg mb-2" placeholder="Link URL Foto (G-Drive / Web)...">
+                            <button type="button" onclick="alert('Upload file dinonaktifkan sementara. Gunakan Link URL.')" class="text-xs text-blue-500 mb-2">Ingin upload file dari HP?</button>
+                            <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 rounded-lg">Tambahkan ke Database</button>
+                        </form>
+                        <div id="list-galeri" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto"></div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border p-6">
+                        <h2 class="text-xl font-bold text-yellow-500 mb-4 border-b pb-2"><i class="fa-solid fa-trophy"></i> Tambah Prestasi</h2>
+                        <form onsubmit="window.tambahPrestasi(event)" class="bg-yellow-50 p-4 rounded-xl mb-4 space-y-3">
+                            <input type="text" id="input_prestasi_judul" required class="w-full px-3 py-2 border rounded-lg" placeholder="Judul Prestasi">
+                            <input type="text" id="input_prestasi_desc" required class="w-full px-3 py-2 border rounded-lg" placeholder="Deskripsi Singkat">
+                            <input type="text" id="input_prestasi_url" required class="w-full px-3 py-2 border rounded-lg" placeholder="Link URL Foto Bukti...">
+                            <button type="submit" class="w-full bg-yellow-500 text-white font-bold py-2 rounded-lg">Simpan Prestasi</button>
+                        </form>
+                        <div id="list-prestasi" class="space-y-3 max-h-64 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MERCHANDISE -->
+            <div id="tab-merch" class="tab-content">
+                <div class="bg-white rounded-2xl shadow-sm border p-8">
+                    <h2 class="text-xl font-bold mb-6 border-b pb-2"><i class="fa-solid fa-shirt"></i> Kelola Merchandise & PDH</h2>
+                    <form onsubmit="window.tambahMerch(event)" class="bg-gray-50 p-6 rounded-xl mb-8 space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="input_merch_nama" required class="w-full px-4 py-2 border rounded-lg" placeholder="Nama Barang">
+                            <input type="text" id="input_merch_desc" required class="w-full px-4 py-2 border rounded-lg" placeholder="Harga / Deskripsi">
+                        </div>
+                        <input type="text" id="input_merch_url" required class="w-full px-4 py-2 border rounded-lg" placeholder="Link URL Foto Barang...">
+                        <button type="submit" class="bg-mansabot text-white font-bold py-2 px-6 rounded-lg">Simpan Merchandise</button>
+                    </form>
+                    <div id="list-merch" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL ANGGOTA CRUD -->
+    <div id="modalForm" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div class="bg-mansabot px-6 py-4 flex justify-between items-center"><h3 id="modal-title" class="text-xl font-bold text-white">Tambah Anggota</h3><button onclick="window.closeModal()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div>
+            <form id="formAdminAnggota" onsubmit="window.simpanAnggotaDB(event)" class="p-6 space-y-4">
+                <input type="hidden" id="edit-id">
+                <div><label class="text-sm font-semibold">Nama Lengkap</label><input type="text" id="admin-nama" required class="w-full px-4 py-2 border rounded-lg"></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="text-sm font-semibold">Angkatan</label><input type="number" id="admin-angkatan" required class="w-full px-4 py-2 border rounded-lg"></div>
+                    <div><label class="text-sm font-semibold">No. WA</label><input type="number" id="admin-wa" required class="w-full px-4 py-2 border rounded-lg"></div>
+                </div>
+                <button type="submit" class="w-full bg-mansabot text-white font-bold py-2 rounded-lg">Simpan Database</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FIREBASE & LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCorEc9O_RPbQ_dFC4wGaNylP1XDv4DVZM",
+            authDomain: "mansabot-162000.firebaseapp.com",
+            projectId: "mansabot-162000",
+            storageBucket: "mansabot-162000.firebasestorage.app",
+            messagingSenderId: "434555440319",
+            appId: "1:434555440319:web:301d3f2f4645b634748a0a"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // SYNC PENGATURAN UMUM
+        onSnapshot(doc(db, "pengaturan", "umum"), (docSnap) => {
+            if (docSnap.exists()) {
+                const d = docSnap.data();
+                document.getElementById('stat-kode').innerText = d.kodeKunci || "2020";
+                document.getElementById('input-kode-ubah').value = d.kodeKunci || "2020";
+                document.getElementById('set-judul').value = d.judulWeb || "";
+                document.getElementById('set-desc').value = d.deskripsiWeb || "";
+                document.getElementById('set-img').value = d.imgHome || "";
+                document.getElementById('str-pembina').value = d.pembina || "";
+                document.getElementById('str-ketua').value = d.ketua || "";
+                document.getElementById('str-wakil').value = d.wakil || "";
+                document.getElementById('str-sekre').value = d.sekre || "";
+                document.getElementById('str-benda').value = d.benda || "";
+            }
+        });
+
+        // SYNC ANGGOTA
+        let arrAnggota = [];
+        onSnapshot(collection(db, "anggota"), (snapshot) => {
+            const tabel = document.getElementById('tabel-anggota'); tabel.innerHTML = ''; arrAnggota = [];
+            let jml = 0, alu = 0; const thn = (new Date().getMonth() >= 6) ? new Date().getFullYear() : new Date().getFullYear() - 1;
+            snapshot.forEach(docSnap => {
+                const m = docSnap.data(); const id = docSnap.id; arrAnggota.push({ id, ...m });
+                (thn - m.angkatan >= 3) ? alu++ : jml++;
+                tabel.innerHTML += `<tr class="border-b hover:bg-gray-50"><td class="py-3 px-4 font-bold">${m.nama}</td><td class="py-3 px-4">${m.angkatan}</td><td class="py-3 px-4">${m.nohp}</td><td class="py-3 px-4 flex gap-2"><button onclick="window.editAnggota('${id}')" class="bg-blue-100 text-blue-600 px-3 py-1 rounded"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('anggota', '${id}')" class="bg-red-100 text-red-600 px-3 py-1 rounded"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+            });
+            document.getElementById('stat-anggota').innerText = jml; document.getElementById('stat-alumni').innerText = alu;
+        });
+
+        // SYNC DIVISI, GALERI, PRESTASI, MERCH
+        onSnapshot(collection(db, "divisi"), (snap) => {
+            const c = document.getElementById('list-divisi'); c.innerHTML = '';
+            snap.forEach(d => c.innerHTML += `<div class="flex gap-4 items-center bg-gray-50 p-4 border rounded-xl"><div class="flex-1"><h4 class="font-bold">${d.data().namaJabatan}</h4><p class="text-sm">${d.data().namaAnggota}</p></div><button onclick="window.hapusDoc('divisi', '${d.id}')" class="text-red-500 hover:bg-red-100 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div>`);
+        });
+        onSnapshot(collection(db, "galeri"), (snap) => {
+            const c = document.getElementById('list-galeri'); c.innerHTML = '';
+            snap.forEach(d => c.innerHTML += `<div class="relative"><img src="${d.data().url}" class="w-full h-24 object-cover rounded-lg border"><button onclick="window.hapusDoc('galeri', '${d.id}')" class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded text-xs"><i class="fa-solid fa-trash"></i></button></div>`);
+        });
+        onSnapshot(collection(db, "prestasi"), (snap) => {
+            const c = document.getElementById('list-prestasi'); c.innerHTML = '';
+            snap.forEach(d => c.innerHTML += `<div class="flex items-center gap-3 bg-white p-3 rounded-xl border"><img src="${d.data().url}" class="w-12 h-12 rounded object-cover"><div class="flex-1"><h4 class="font-bold text-sm">${d.data().judul}</h4><p class="text-xs text-gray-500">${d.data().desc}</p></div><button onclick="window.hapusDoc('prestasi', '${d.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div>`);
+        });
+        onSnapshot(collection(db, "merch"), (snap) => {
+            const c = document.getElementById('list-merch'); c.innerHTML = '';
+            snap.forEach(d => c.innerHTML += `<div class="flex items-center gap-4 bg-white p-4 rounded-xl border"><img src="${d.data().url}" class="w-16 h-16 rounded object-cover"><div class="flex-1"><h4 class="font-bold text-sm">${d.data().nama}</h4><p class="text-xs text-gray-500">${d.data().desc}</p></div><button onclick="window.hapusDoc('merch', '${d.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div>`);
+        });
+
+        // FUNGSI WRITE KE FIREBASE
+        window.ubahKodeKunci = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKunci: document.getElementById('input-kode-ubah').value }, { merge: true }); alert("Kode Kunci Diperbarui!"); }
+        window.simpanPengaturanUmum = async (e) => { e.preventDefault(); await setDoc(doc(db, "pengaturan", "umum"), { judulWeb: document.getElementById('set-judul').value, deskripsiWeb: document.getElementById('set-desc').value, imgHome: document.getElementById('set-img').value }, { merge: true }); alert("Tampilan Utama Disimpan!"); }
+        window.simpanStrukturInti = async () => { await setDoc(doc(db, "pengaturan", "umum"), { pembina: document.getElementById('str-pembina').value, ketua: document.getElementById('str-ketua').value, wakil: document.getElementById('str-wakil').value, sekre: document.getElementById('str-sekre').value, benda: document.getElementById('str-benda').value }, { merge: true }); alert("Struktur Inti Disimpan!"); }
+        
+        window.tambahDivisi = async (e) => { e.preventDefault(); await addDoc(collection(db, "divisi"), { namaJabatan: document.getElementById('div-jabatan').value, namaAnggota: document.getElementById('div-nama').value }); document.getElementById('div-jabatan').value = ''; document.getElementById('div-nama').value = ''; }
+        window.tambahGaleri = async (e) => { e.preventDefault(); await addDoc(collection(db, "galeri"), { url: document.getElementById('input_galeri_url').value }); document.getElementById('input_galeri_url').value = ''; }
+        window.tambahPrestasi = async (e) => { e.preventDefault(); await addDoc(collection(db, "prestasi"), { judul: document.getElementById('input_prestasi_judul').value, desc: document.getElementById('input_prestasi_desc').value, url: document.getElementById('input_prestasi_url').value }); e.target.reset(); }
+        window.tambahMerch = async (e) => { e.preventDefault(); await addDoc(collection(db, "merch"), { nama: document.getElementById('input_merch_nama').value, desc: document.getElementById('input_merch_desc').value, url: document.getElementById('input_merch_url').value }); e.target.reset(); }
+
+        window.simpanAnggotaDB = async (e) => { e.preventDefault(); const id = document.getElementById('edit-id').value; const dat = { nama: document.getElementById('admin-nama').value, angkatan: parseInt(document.getElementById('admin-angkatan').value), nohp: document.getElementById('admin-wa').value }; if(id==='') await addDoc(collection(db, "anggota"), dat); else await updateDoc(doc(db, "anggota", id), dat); window.closeModal(); }
+        
+        window.hapusDoc = async (col, id) => { if(confirm("Yakin ingin menghapus data ini secara permanen?")) await deleteDoc(doc(db, col, id)); }
+        window.editAnggota = (id) => { const m = arrAnggota.find(x => x.id === id); if(m){ document.getElementById('edit-id').value = id; document.getElementById('admin-nama').value = m.nama; document.getElementById('admin-angkatan').value = m.angkatan; document.getElementById('admin-wa').value = m.nohp; document.getElementById('modal-title').innerText = "Edit Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); } }
+
+        // FUNGSI UI ADMIN
+        window.prosesLogin = (e) => { e.preventDefault(); if(document.getElementById('login-username').value==='admin' && document.getElementById('login-password').value==='admin123'){ document.getElementById('login-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('login-screen').style.display='none',500); } else { document.getElementById('login-error').classList.remove('hidden'); setTimeout(()=>document.getElementById('login-error').classList.add('hidden'),3000); } }
+        window.logoutAdmin = () => { document.getElementById('form-login').reset(); document.getElementById('login-screen').style.display='flex'; setTimeout(()=>document.getElementById('login-screen').classList.remove('fade-out'),10); window.switchTab('dashboard'); }
+        window.switchTab = (id) => { document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('bg-mansabot','text-white','shadow-md');b.classList.add('text-gray-600','hover:bg-mansabot-light');}); document.getElementById('tab-'+id).classList.add('active'); let btn=document.getElementById('btn-'+id); btn.classList.remove('text-gray-600','hover:bg-mansabot-light'); btn.classList.add('bg-mansabot','text-white','shadow-md'); }
+        window.openModalTambah = () => { document.getElementById('formAdminAnggota').reset(); document.getElementById('edit-id').value = ''; document.getElementById('modal-title').innerText = "Tambah Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); }
+        window.closeModal = () => { document.getElementById('modalForm').classList.add('hidden'); document.getElementById('modalForm').classList.remove('flex'); }
+    </script>
+</body>
+</html>
