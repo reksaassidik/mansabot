@@ -44,6 +44,8 @@
             <button onclick="window.switchTab('anggota')" id="btn-anggota" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-users w-6"></i> Kelola Anggota</button>
             <button onclick="window.switchTab('galeri')" id="btn-galeri" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-images w-6"></i> Galeri & Prestasi</button>
             <button onclick="window.switchTab('merch')" id="btn-merch" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-shirt w-6"></i> Merchandise</button>
+            <button onclick="window.switchTab('inventaris')" id="btn-inventaris" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-box-open w-6"></i> Inventaris Barang</button>
+            <button onclick="window.switchTab('keuangan')" id="btn-keuangan" class="nav-btn w-full text-left px-4 py-3 text-gray-600 hover:bg-mansabot-light font-medium rounded-xl"><i class="fa-solid fa-wallet w-6"></i> Kelola Keuangan</button>
         </nav>
         <div class="p-4 border-t"><button onclick="window.logoutAdmin()" class="w-full px-4 py-3 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white font-bold rounded-xl"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button></div>
     </aside>
@@ -53,7 +55,9 @@
         <header class="bg-white shadow-sm border-b px-8 py-5 flex justify-between items-center sticky top-0 z-10"><h1 id="page-title" class="text-2xl font-bold">Dashboard</h1><div class="flex items-center space-x-3 bg-mansabot-light px-4 py-2 rounded-full cursor-pointer"><span class="text-mansabot-dark font-semibold text-sm">Halo, Reksa</span><div class="w-8 h-8 bg-mansabot rounded-full flex items-center justify-center text-white font-bold text-sm">R</div></div></header>
 
         <div class="p-8">
-            <!-- DASHBOARD -->
+            <!-- DASHBOARD, TAMPILAN UTAMA, STRUKTUR, ANGGOTA, GALERI, MERCH, INVENTARIS (Disembunyikan kodenya agar ringkas, asumsikan sama seperti sebelumnya) -->
+            <!-- SEMUA TAB TETAP ADA SESUAI KODE SEBELUMNYA. HANYA MENAMPILKAN TAB KEUANGAN SECARA PENUH -->
+            
             <div id="tab-dashboard" class="tab-content active">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4"><div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-users"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Total Anggota</h3><p id="stat-anggota" class="text-3xl font-bold mt-1">0</p></div></div>
@@ -93,7 +97,7 @@
                     <div class="flex justify-between items-center mb-6 border-b pb-2">
                         <h2 class="text-xl font-bold">Divisi Tambahan</h2>
                     </div>
-                    <form onsubmit="window.tambahDivisi(event)" class="flex gap-4 mb-6">
+                    <form onsubmit="window.tambahDivisi(event)" class="flex flex-col md:flex-row gap-4 mb-6">
                         <input type="text" id="div-jabatan" required placeholder="Nama Jabatan (Cth: Humas)" class="flex-1 px-4 py-2 border rounded-lg">
                         <input type="text" id="div-nama" required placeholder="Nama Anggota" class="flex-1 px-4 py-2 border rounded-lg">
                         <button type="submit" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg"><i class="fa-solid fa-plus"></i> Tambah</button>
@@ -104,13 +108,13 @@
 
             <!-- ANGGOTA CRUD -->
             <div id="tab-anggota" class="tab-content">
-                <div class="bg-white rounded-2xl shadow-sm border p-6 mb-6 flex justify-between">
-                    <div><h2 class="text-lg font-bold">Kode Pendaftaran</h2><p class="text-sm text-gray-500">Ubah kode rahasia web.</p></div>
+                <div class="bg-white rounded-2xl shadow-sm border p-6 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div><h2 class="text-lg font-bold">Kode Pendaftaran</h2><p class="text-sm text-gray-500">Ubah kode rahasia pendaftaran web.</p></div>
                     <div class="flex items-center gap-2"><input type="text" id="input-kode-ubah" class="px-4 py-2 border rounded-lg font-bold text-center w-32"><button onclick="window.ubahKodeKunci()" class="bg-yellow-400 font-bold py-2 px-4 rounded-lg">Perbarui</button></div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-sm border p-8">
-                    <div class="flex justify-between items-center mb-6"><h2 class="text-xl font-bold">Database Anggota</h2><button onclick="window.openModalTambah()" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg"><i class="fa-solid fa-plus"></i> Tambah Manual</button></div>
-                    <table class="w-full text-left border-collapse">
+                <div class="bg-white rounded-2xl shadow-sm border p-8 overflow-x-auto">
+                    <div class="flex justify-between items-center mb-6"><h2 class="text-xl font-bold">Database Anggota</h2><button onclick="window.openModalTambah()" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg whitespace-nowrap"><i class="fa-solid fa-plus"></i> Tambah Manual</button></div>
+                    <table class="w-full text-left border-collapse min-w-max">
                         <thead><tr class="bg-blue-50 border-b"><th class="py-3 px-4">Nama</th><th class="py-3 px-4">Angkatan</th><th class="py-3 px-4">No. WA</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead>
                         <tbody id="tabel-anggota" class="text-sm"></tbody>
                     </table>
@@ -124,10 +128,9 @@
                         <h2 class="text-xl font-bold mb-4 border-b pb-2"><i class="fa-solid fa-images"></i> Tambah Galeri</h2>
                         <form onsubmit="window.tambahGaleri(event)" class="mb-4">
                             <input type="text" id="input_galeri_url" required class="w-full px-3 py-2 border rounded-lg mb-2" placeholder="Link URL Foto (G-Drive / Web)...">
-                            <button type="button" onclick="alert('Upload file dinonaktifkan sementara. Gunakan Link URL.')" class="text-xs text-blue-500 mb-2">Ingin upload file dari HP?</button>
                             <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 rounded-lg">Tambahkan ke Database</button>
                         </form>
-                        <div id="list-galeri" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto"></div>
+                        <div id="list-galeri" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-64 overflow-y-auto"></div>
                     </div>
 
                     <div class="bg-white rounded-2xl shadow-sm border p-6">
@@ -138,7 +141,7 @@
                             <input type="text" id="input_prestasi_url" required class="w-full px-3 py-2 border rounded-lg" placeholder="Link URL Foto Bukti...">
                             <button type="submit" class="w-full bg-yellow-500 text-white font-bold py-2 rounded-lg">Simpan Prestasi</button>
                         </form>
-                        <div id="list-prestasi" class="space-y-3 max-h-64 overflow-y-auto"></div>
+                        <div id="list-prestasi" class="space-y-3 max-h-64 overflow-y-auto pr-2"></div>
                     </div>
                 </div>
             </div>
@@ -155,13 +158,106 @@
                         <input type="text" id="input_merch_url" required class="w-full px-4 py-2 border rounded-lg" placeholder="Link URL Foto Barang...">
                         <button type="submit" class="bg-mansabot text-white font-bold py-2 px-6 rounded-lg">Simpan Merchandise</button>
                     </form>
-                    <div id="list-merch" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    <div id="list-merch" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
             </div>
+
+            <!-- INVENTARIS -->
+            <div id="tab-inventaris" class="tab-content">
+                <div class="bg-white rounded-2xl shadow-sm border p-8">
+                    <h2 class="text-xl font-bold mb-6 border-b pb-2"><i class="fa-solid fa-box-open"></i> Kelola Inventaris Robotik</h2>
+                    <form onsubmit="window.tambahInventaris(event)" class="bg-indigo-50 p-6 rounded-xl mb-8 space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <input type="text" id="input_inv_nama" required class="w-full px-4 py-2 border rounded-lg" placeholder="Nama Barang (Cth: Arduino Uno)">
+                            <input type="number" id="input_inv_jumlah" required class="w-full px-4 py-2 border rounded-lg" placeholder="Jumlah Barang">
+                            <select id="input_inv_kondisi" class="w-full px-4 py-2 border rounded-lg bg-white">
+                                <option value="Baik">Kondisi: Baik</option>
+                                <option value="Rusak Ringan">Kondisi: Rusak Ringan</option>
+                                <option value="Rusak Berat">Kondisi: Rusak Berat</option>
+                            </select>
+                        </div>
+                        <input type="text" id="input_inv_url" required class="w-full px-4 py-2 border rounded-lg" placeholder="Link URL Foto Barang...">
+                        <button type="submit" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700">Simpan ke Inventaris</button>
+                    </form>
+                    <div id="list-inventaris" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- KEUANGAN EKSKUL (YANG BARU DITAMBAHKAN CHECKLIST KAS) -->
+            <div id="tab-keuangan" class="tab-content">
+                
+                <!-- INDIKATOR SALDO -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4">
+                        <div class="w-14 h-14 bg-green-100 text-green-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div><h3 class="text-gray-500 text-sm font-bold">Total Pemasukan</h3><p id="stat-uang-masuk" class="text-xl font-bold mt-1 text-green-600">Rp 0</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4">
+                        <div class="w-14 h-14 bg-red-100 text-red-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-arrow-up"></i></div>
+                        <div><h3 class="text-gray-500 text-sm font-bold">Total Pengeluaran</h3><p id="stat-uang-keluar" class="text-xl font-bold mt-1 text-red-600">Rp 0</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-blue-500">
+                        <div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-wallet"></i></div>
+                        <div><h3 class="text-gray-500 text-sm font-bold">Saldo Akhir</h3><p id="stat-saldo-akhir" class="text-2xl font-bold mt-1 text-blue-600">Rp 0</p></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    
+                    <!-- 1. CHECKLIST KAS ANGGOTA BULANAN -->
+                    <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col">
+                        <div class="flex justify-between items-center mb-6 border-b pb-2">
+                            <h2 class="text-lg font-bold"><i class="fa-solid fa-clipboard-check text-blue-500"></i> Checklist Uang Kas</h2>
+                        </div>
+                        
+                        <div class="flex gap-2 mb-4">
+                            <div class="flex-1"><label class="text-xs font-bold text-gray-500">Pilih Bulan/Tahun</label><input type="month" id="input-periode-kas" class="w-full border px-3 py-2 rounded-lg font-bold" onchange="window.ubahPeriodeKas(this.value)"></div>
+                            <div class="w-1/3"><label class="text-xs font-bold text-gray-500">Tarif /Bulan</label><input type="number" id="input-tarif-kas" value="10000" class="w-full border px-3 py-2 rounded-lg font-bold"></div>
+                        </div>
+
+                        <div class="bg-blue-50 p-3 rounded-lg mb-4 text-sm font-bold text-blue-800 flex justify-between">
+                            <span>Terkumpul Bulan Ini:</span>
+                            <span id="rekap-kas-bulan">Rp 0</span>
+                        </div>
+
+                        <div class="overflow-y-auto max-h-96 pr-2">
+                            <table class="w-full text-left border-collapse">
+                                <tbody id="tabel-checklist-kas" class="text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 2. TRANSAKSI UMUM LAINNYA -->
+                    <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col">
+                        <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-exchange-alt text-gray-500"></i> Pemasukan / Pengeluaran Umum</h2>
+                        
+                        <form onsubmit="window.tambahTransaksiUmum(event)" class="bg-slate-50 p-4 rounded-xl mb-6 space-y-3">
+                            <div class="flex gap-3">
+                                <input type="date" id="input_transaksi_tgl" required class="flex-1 px-3 py-2 border rounded-lg bg-white text-sm">
+                                <select id="input_transaksi_jenis" class="w-32 px-3 py-2 border rounded-lg bg-white font-semibold text-sm">
+                                    <option value="masuk" class="text-green-600">Masuk (+)</option>
+                                    <option value="keluar" class="text-red-600">Keluar (-)</option>
+                                </select>
+                            </div>
+                            <input type="number" id="input_transaksi_nominal" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Nominal (Rp)">
+                            <input type="text" id="input_transaksi_ket" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Keterangan (Cth: Beli Konsumsi, Dana Sekolah)">
+                            <button type="submit" class="w-full bg-gray-800 text-white font-bold py-2 rounded-lg text-sm hover:bg-black">Simpan Transaksi</button>
+                        </form>
+                        
+                        <div class="overflow-y-auto max-h-64 pr-2">
+                            <table class="w-full text-left border-collapse">
+                                <tbody id="tabel-transaksi-umum" class="text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </main>
 
-    <!-- MODAL ANGGOTA CRUD -->
+    <!-- MODAL ANGGOTA CRUD (Dihilangkan detailnya agar rapi, tetap utuh sama seperti sebelumnya) -->
     <div id="modalForm" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
         <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
             <div class="bg-mansabot px-6 py-4 flex justify-between items-center"><h3 id="modal-title" class="text-xl font-bold text-white">Tambah Anggota</h3><button onclick="window.closeModal()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div>
@@ -176,92 +272,209 @@
             </form>
         </div>
     </div>
+    <!-- MODAL EDIT MERCH (Tetap utuh) -->
+    <div id="modalEditMerch" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4"><div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"><div class="bg-gray-800 px-6 py-4 flex justify-between items-center"><h3 class="text-xl font-bold text-white"><i class="fa-solid fa-shirt"></i> Edit</h3><button type="button" onclick="window.closeModalMerch()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div><form onsubmit="window.simpanEditMerch(event)" class="p-6 space-y-4"><input type="hidden" id="edit-merch-id"><input type="text" id="edit-merch-nama" required class="w-full px-4 py-2 border rounded-lg"><input type="text" id="edit-merch-desc" required class="w-full px-4 py-2 border rounded-lg"><input type="text" id="edit-merch-url" required class="w-full px-4 py-2 border rounded-lg"><button type="submit" class="w-full bg-mansabot text-white font-bold py-2 rounded-lg mt-2">Simpan</button></form></div></div>
+    <!-- MODAL EDIT INV (Tetap utuh) -->
+    <div id="modalEditInv" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4"><div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"><div class="bg-indigo-600 px-6 py-4 flex justify-between items-center"><h3 class="text-xl font-bold text-white"><i class="fa-solid fa-box-open"></i> Edit</h3><button type="button" onclick="window.closeModalInv()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div><form onsubmit="window.simpanEditInventaris(event)" class="p-6 space-y-4"><input type="hidden" id="edit-inv-id"><input type="text" id="edit-inv-nama" required class="w-full px-4 py-2 border rounded-lg"><div class="grid grid-cols-2 gap-4"><input type="number" id="edit-inv-jumlah" required class="w-full px-4 py-2 border rounded-lg"><select id="edit-inv-kondisi" class="w-full px-4 py-2 border rounded-lg bg-white"><option value="Baik">Baik</option><option value="Rusak Ringan">Rusak Ringan</option><option value="Rusak Berat">Rusak Berat</option></select></div><input type="text" id="edit-inv-url" required class="w-full px-4 py-2 border rounded-lg"><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg mt-2">Simpan</button></form></div></div>
+
 
     <!-- FIREBASE & LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCorEc9O_RPbQ_dFC4wGaNylP1XDv4DVZM",
-            authDomain: "mansabot-162000.firebaseapp.com",
-            projectId: "mansabot-162000",
-            storageBucket: "mansabot-162000.firebasestorage.app",
-            messagingSenderId: "434555440319",
-            appId: "1:434555440319:web:301d3f2f4645b634748a0a"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCorEc9O_RPbQ_dFC4wGaNylP1XDv4DVZM", authDomain: "mansabot-162000.firebaseapp.com", projectId: "mansabot-162000", storageBucket: "mansabot-162000.firebasestorage.app", messagingSenderId: "434555440319", appId: "1:434555440319:web:301d3f2f4645b634748a0a" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        // DATA STATE UTK EDIT & RENDER
+        let arrAnggota = []; let arrMerch = []; let arrInventaris = []; let arrKasAnggota = [];
+        
+        // FUNGSI FORMAT RUPIAH
+        const formatRupiah = (angka) => { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
+
+        // SETUP PERIODE KAS AWAL (Tahun-Bulan Saat Ini)
+        const getBulanSekarang = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
+        let periodeKasAktif = getBulanSekarang();
+        document.getElementById('input-periode-kas').value = periodeKasAktif;
+        document.getElementById('input_transaksi_tgl').valueAsDate = new Date();
+
+        // GLOBAL KEUANGAN STATE
+        let globalTotalKasMurni = 0;
+        let globalTotalUmumMasuk = 0;
+        let globalTotalUmumKeluar = 0;
+
+        // UPDATE STATISTIK KEUANGAN
+        const hitungStatistikKeuangan = () => {
+            let totalMasuk = globalTotalKasMurni + globalTotalUmumMasuk;
+            let saldoAkhir = totalMasuk - globalTotalUmumKeluar;
+            document.getElementById('stat-uang-masuk').innerText = formatRupiah(totalMasuk);
+            document.getElementById('stat-uang-keluar').innerText = formatRupiah(globalTotalUmumKeluar);
+            document.getElementById('stat-saldo-akhir').innerText = formatRupiah(saldoAkhir);
+        }
 
         // SYNC PENGATURAN UMUM
         onSnapshot(doc(db, "pengaturan", "umum"), (docSnap) => {
             if (docSnap.exists()) {
                 const d = docSnap.data();
-                document.getElementById('stat-kode').innerText = d.kodeKunci || "2020";
-                document.getElementById('input-kode-ubah').value = d.kodeKunci || "2020";
-                document.getElementById('set-judul').value = d.judulWeb || "";
-                document.getElementById('set-desc').value = d.deskripsiWeb || "";
-                document.getElementById('set-img').value = d.imgHome || "";
-                document.getElementById('str-pembina').value = d.pembina || "";
-                document.getElementById('str-ketua').value = d.ketua || "";
-                document.getElementById('str-wakil').value = d.wakil || "";
-                document.getElementById('str-sekre').value = d.sekre || "";
-                document.getElementById('str-benda').value = d.benda || "";
+                document.getElementById('stat-kode').innerText = d.kodeKunci || "2020"; document.getElementById('input-kode-ubah').value = d.kodeKunci || "2020";
+                document.getElementById('set-judul').value = d.judulWeb || ""; document.getElementById('set-desc').value = d.deskripsiWeb || "";
+                document.getElementById('set-img').value = d.imgHome || ""; document.getElementById('str-pembina').value = d.pembina || "";
+                document.getElementById('str-ketua').value = d.ketua || ""; document.getElementById('str-wakil').value = d.wakil || "";
+                document.getElementById('str-sekre').value = d.sekre || ""; document.getElementById('str-benda').value = d.benda || "";
             }
         });
 
         // SYNC ANGGOTA
-        let arrAnggota = [];
         onSnapshot(collection(db, "anggota"), (snapshot) => {
             const tabel = document.getElementById('tabel-anggota'); tabel.innerHTML = ''; arrAnggota = [];
             let jml = 0, alu = 0; const thn = (new Date().getMonth() >= 6) ? new Date().getFullYear() : new Date().getFullYear() - 1;
+            
+            // Filter hanya anggota aktif untuk ditagih kas (bukan alumni)
+            let arrAnggotaAktif = [];
+
             snapshot.forEach(docSnap => {
                 const m = docSnap.data(); const id = docSnap.id; arrAnggota.push({ id, ...m });
-                (thn - m.angkatan >= 3) ? alu++ : jml++;
-                tabel.innerHTML += `<tr class="border-b hover:bg-gray-50"><td class="py-3 px-4 font-bold">${m.nama}</td><td class="py-3 px-4">${m.angkatan}</td><td class="py-3 px-4">${m.nohp}</td><td class="py-3 px-4 flex gap-2"><button onclick="window.editAnggota('${id}')" class="bg-blue-100 text-blue-600 px-3 py-1 rounded"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('anggota', '${id}')" class="bg-red-100 text-red-600 px-3 py-1 rounded"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+                if (thn - m.angkatan >= 3) { alu++; } else { jml++; arrAnggotaAktif.push({ id, ...m }); }
+                tabel.innerHTML += `<tr class="border-b hover:bg-gray-50"><td class="py-3 px-4 font-bold whitespace-nowrap">${m.nama}</td><td class="py-3 px-4">${m.angkatan}</td><td class="py-3 px-4">${m.nohp}</td><td class="py-3 px-4 flex gap-2 justify-center"><button onclick="window.editAnggota('${id}')" class="bg-blue-100 text-blue-600 px-3 py-1 rounded hover:bg-blue-200"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('anggota', '${id}')" class="bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             });
             document.getElementById('stat-anggota').innerText = jml; document.getElementById('stat-alumni').innerText = alu;
+            
+            // Simpan yang aktif untuk dirender di tabel kas
+            window.arrAnggotaAktif = arrAnggotaAktif;
+            if(arrKasAnggota.length > 0) window.renderChecklistKas(); // re-render checklist jika data anggota berubah
         });
 
-        // SYNC DIVISI, GALERI, PRESTASI, MERCH
-        onSnapshot(collection(db, "divisi"), (snap) => {
-            const c = document.getElementById('list-divisi'); c.innerHTML = '';
-            snap.forEach(d => c.innerHTML += `<div class="flex gap-4 items-center bg-gray-50 p-4 border rounded-xl"><div class="flex-1"><h4 class="font-bold">${d.data().namaJabatan}</h4><p class="text-sm">${d.data().namaAnggota}</p></div><button onclick="window.hapusDoc('divisi', '${d.id}')" class="text-red-500 hover:bg-red-100 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div>`);
-        });
-        onSnapshot(collection(db, "galeri"), (snap) => {
-            const c = document.getElementById('list-galeri'); c.innerHTML = '';
-            snap.forEach(d => c.innerHTML += `<div class="relative"><img src="${d.data().url}" class="w-full h-24 object-cover rounded-lg border"><button onclick="window.hapusDoc('galeri', '${d.id}')" class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded text-xs"><i class="fa-solid fa-trash"></i></button></div>`);
-        });
-        onSnapshot(collection(db, "prestasi"), (snap) => {
-            const c = document.getElementById('list-prestasi'); c.innerHTML = '';
-            snap.forEach(d => c.innerHTML += `<div class="flex items-center gap-3 bg-white p-3 rounded-xl border"><img src="${d.data().url}" class="w-12 h-12 rounded object-cover"><div class="flex-1"><h4 class="font-bold text-sm">${d.data().judul}</h4><p class="text-xs text-gray-500">${d.data().desc}</p></div><button onclick="window.hapusDoc('prestasi', '${d.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div>`);
-        });
-        onSnapshot(collection(db, "merch"), (snap) => {
-            const c = document.getElementById('list-merch'); c.innerHTML = '';
-            snap.forEach(d => c.innerHTML += `<div class="flex items-center gap-4 bg-white p-4 rounded-xl border"><img src="${d.data().url}" class="w-16 h-16 rounded object-cover"><div class="flex-1"><h4 class="font-bold text-sm">${d.data().nama}</h4><p class="text-xs text-gray-500">${d.data().desc}</p></div><button onclick="window.hapusDoc('merch', '${d.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div>`);
+        // SYNC DIVISI, GALERI, PRESTASI, MERCH, INVENTARIS (Sama seperti sebelumnya)
+        onSnapshot(collection(db, "divisi"), (snap) => { const c = document.getElementById('list-divisi'); c.innerHTML = ''; snap.forEach(d => c.innerHTML += `<div class="flex gap-4 items-center bg-gray-50 p-4 border rounded-xl"><div class="flex-1"><h4 class="font-bold">${d.data().namaJabatan}</h4><p class="text-sm">${d.data().namaAnggota}</p></div><button onclick="window.hapusDoc('divisi', '${d.id}')" class="text-red-500 hover:bg-red-100 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div>`); });
+        onSnapshot(collection(db, "galeri"), (snap) => { const c = document.getElementById('list-galeri'); c.innerHTML = ''; snap.forEach(d => c.innerHTML += `<div class="relative aspect-square overflow-hidden rounded-lg border bg-gray-100"><img src="${d.data().url}" class="w-full h-full object-cover"><button onclick="window.hapusDoc('galeri', '${d.id}')" class="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-lg text-xs shadow-md hover:bg-red-600"><i class="fa-solid fa-trash"></i></button></div>`); });
+        onSnapshot(collection(db, "prestasi"), (snap) => { const c = document.getElementById('list-prestasi'); c.innerHTML = ''; snap.forEach(d => c.innerHTML += `<div class="flex items-center gap-3 bg-white p-3 rounded-xl border hover:shadow-sm transition"><div class="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-gray-100"><img src="${d.data().url}" class="w-full h-full object-cover"></div><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${d.data().judul}</h4><p class="text-xs text-gray-500 truncate">${d.data().desc}</p></div><button onclick="window.hapusDoc('prestasi', '${d.id}')" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div>`); });
+        onSnapshot(collection(db, "merch"), (snap) => { const c = document.getElementById('list-merch'); c.innerHTML = ''; arrMerch = []; snap.forEach(d => { arrMerch.push({ id: d.id, ...d.data() }); c.innerHTML += `<div class="flex items-center gap-4 bg-white p-4 rounded-xl border hover:shadow-sm transition"><div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100"><img src="${d.data().url}" class="w-full h-full object-cover"></div><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${d.data().nama}</h4><p class="text-xs text-gray-500 truncate">${d.data().desc}</p></div><div class="flex flex-col gap-1"><button onclick="window.editMerchTrigger('${d.id}')" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('merch', '${d.id}')" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div></div>`; }); });
+        onSnapshot(collection(db, "inventaris"), (snap) => { const c = document.getElementById('list-inventaris'); c.innerHTML = ''; arrInventaris = []; snap.forEach(d => { let m = d.data(); arrInventaris.push({ id: d.id, ...m }); c.innerHTML += `<div class="flex items-center gap-4 bg-white p-4 rounded-xl border hover:shadow-sm transition"><div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-indigo-50"><img src="${m.url}" class="w-full h-full object-cover"></div><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${m.nama}</h4><p class="text-xs font-medium text-gray-500">Stok: ${m.jumlah} | <span class="${m.kondisi==='Baik'?'text-green-600':(m.kondisi==='Rusak Ringan'?'text-yellow-600':'text-red-600')}">${m.kondisi}</span></p></div><div class="flex flex-col gap-1"><button onclick="window.editInvTrigger('${d.id}')" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('inventaris', '${d.id}')" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div></div>`; }); });
+
+
+        // === SISTEM KAS ANGGOTA BULANAN ===
+        onSnapshot(collection(db, "kas_anggota"), (snap) => {
+            arrKasAnggota = [];
+            globalTotalKasMurni = 0;
+            snap.forEach(d => {
+                const data = d.data();
+                arrKasAnggota.push({id: d.id, ...data});
+                globalTotalKasMurni += data.nominal; // Tambah ke global balance
+            });
+            window.renderChecklistKas();
+            hitungStatistikKeuangan();
         });
 
-        // FUNGSI WRITE KE FIREBASE
+        window.ubahPeriodeKas = (val) => {
+            if(!val) return;
+            periodeKasAktif = val;
+            window.renderChecklistKas();
+        };
+
+        window.renderChecklistKas = () => {
+            const tbody = document.getElementById('tabel-checklist-kas');
+            if(!window.arrAnggotaAktif) return;
+            tbody.innerHTML = '';
+            
+            let totalTerkumpulBulanIni = 0;
+
+            window.arrAnggotaAktif.forEach(m => {
+                const docId = `${m.id}_${periodeKasAktif}`;
+                const kas = arrKasAnggota.find(x => x.id === docId); // Cek apakah ID Dokumen = idAnggota_BulanTahun
+                
+                let isLunas = !!kas;
+                let badge = isLunas ? `<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold w-16 text-center inline-block">Lunas</span>` : `<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold w-16 text-center inline-block">Belum</span>`;
+                let btn = isLunas ? `<button onclick="window.hapusKas('${docId}')" class="text-red-500 hover:text-red-700 text-xs font-bold"><i class="fa-solid fa-xmark"></i> Batal</button>` : `<button onclick="window.tandaiLunasKas('${m.id}', '${m.nama.replace(/'/g, "\\'")}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded shadow text-xs font-bold"><i class="fa-solid fa-check"></i> Lunas</button>`;
+                
+                if(isLunas) totalTerkumpulBulanIni += kas.nominal;
+
+                tbody.innerHTML += `<tr class="border-b"><td class="py-2 pr-2 font-semibold text-gray-800">${m.nama}</td><td class="py-2 px-1">${badge}</td><td class="py-2 pl-2 text-right">${btn}</td></tr>`;
+            });
+
+            document.getElementById('rekap-kas-bulan').innerText = formatRupiah(totalTerkumpulBulanIni);
+        };
+
+        window.tandaiLunasKas = async (idAnggota, nama) => {
+            const nominal = parseInt(document.getElementById('input-tarif-kas').value) || 10000;
+            const docId = `${idAnggota}_${periodeKasAktif}`; // Format ID khusus agar otomatis menimpa jika dobel
+            await setDoc(doc(db, "kas_anggota", docId), {
+                idAnggota, nama, periode: periodeKasAktif, nominal, timestamp: new Date().toISOString()
+            });
+        };
+
+        window.hapusKas = async (docId) => { await deleteDoc(doc(db, "kas_anggota", docId)); };
+
+
+        // === SISTEM TRANSAKSI UMUM ===
+        const qTransaksiUmum = query(collection(db, "transaksi_umum"), orderBy("tanggal", "desc"));
+        onSnapshot(qTransaksiUmum, (snapshot) => {
+            const tabel = document.getElementById('tabel-transaksi-umum'); tabel.innerHTML = '';
+            globalTotalUmumMasuk = 0; globalTotalUmumKeluar = 0;
+            
+            snapshot.forEach(docSnap => {
+                const tr = docSnap.data();
+                if(tr.jenis === 'masuk') globalTotalUmumMasuk += tr.nominal;
+                else globalTotalUmumKeluar += tr.nominal;
+
+                const dateParts = tr.tanggal.split('-');
+                const tglFormat = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : tr.tanggal;
+                
+                let iconClass = tr.jenis === 'masuk' ? 'text-green-500 fa-arrow-down' : 'text-red-500 fa-arrow-up';
+                let classNominal = tr.jenis === 'masuk' ? 'text-green-600' : 'text-red-600';
+                
+                tabel.innerHTML += `<tr class="border-b hover:bg-gray-50">
+                    <td class="py-2 px-2 text-gray-500 text-xs whitespace-nowrap">${tglFormat}</td>
+                    <td class="py-2 px-2 font-medium">${tr.keterangan}</td>
+                    <td class="py-2 px-2 font-bold ${classNominal} whitespace-nowrap"><i class="fa-solid ${iconClass} text-xs mr-1"></i>${formatRupiah(tr.nominal)}</td>
+                    <td class="py-2 px-2 text-right"><button onclick="window.hapusDoc('transaksi_umum', '${docSnap.id}')" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+            });
+            hitungStatistikKeuangan();
+        });
+
+        window.tambahTransaksiUmum = async (e) => { 
+            e.preventDefault(); 
+            await addDoc(collection(db, "transaksi_umum"), { 
+                tanggal: document.getElementById('input_transaksi_tgl').value, 
+                keterangan: document.getElementById('input_transaksi_ket').value, 
+                jenis: document.getElementById('input_transaksi_jenis').value, 
+                nominal: parseInt(document.getElementById('input_transaksi_nominal').value),
+                timestamp: new Date()
+            }); 
+            document.getElementById('input_transaksi_ket').value = '';
+            document.getElementById('input_transaksi_nominal').value = '';
+        };
+
+        // FUNGSI UMUM WRITE KE FIREBASE
         window.ubahKodeKunci = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKunci: document.getElementById('input-kode-ubah').value }, { merge: true }); alert("Kode Kunci Diperbarui!"); }
         window.simpanPengaturanUmum = async (e) => { e.preventDefault(); await setDoc(doc(db, "pengaturan", "umum"), { judulWeb: document.getElementById('set-judul').value, deskripsiWeb: document.getElementById('set-desc').value, imgHome: document.getElementById('set-img').value }, { merge: true }); alert("Tampilan Utama Disimpan!"); }
         window.simpanStrukturInti = async () => { await setDoc(doc(db, "pengaturan", "umum"), { pembina: document.getElementById('str-pembina').value, ketua: document.getElementById('str-ketua').value, wakil: document.getElementById('str-wakil').value, sekre: document.getElementById('str-sekre').value, benda: document.getElementById('str-benda').value }, { merge: true }); alert("Struktur Inti Disimpan!"); }
-        
         window.tambahDivisi = async (e) => { e.preventDefault(); await addDoc(collection(db, "divisi"), { namaJabatan: document.getElementById('div-jabatan').value, namaAnggota: document.getElementById('div-nama').value }); document.getElementById('div-jabatan').value = ''; document.getElementById('div-nama').value = ''; }
         window.tambahGaleri = async (e) => { e.preventDefault(); await addDoc(collection(db, "galeri"), { url: document.getElementById('input_galeri_url').value }); document.getElementById('input_galeri_url').value = ''; }
         window.tambahPrestasi = async (e) => { e.preventDefault(); await addDoc(collection(db, "prestasi"), { judul: document.getElementById('input_prestasi_judul').value, desc: document.getElementById('input_prestasi_desc').value, url: document.getElementById('input_prestasi_url').value }); e.target.reset(); }
         window.tambahMerch = async (e) => { e.preventDefault(); await addDoc(collection(db, "merch"), { nama: document.getElementById('input_merch_nama').value, desc: document.getElementById('input_merch_desc').value, url: document.getElementById('input_merch_url').value }); e.target.reset(); }
-
+        window.tambahInventaris = async (e) => { e.preventDefault(); await addDoc(collection(db, "inventaris"), { nama: document.getElementById('input_inv_nama').value, jumlah: parseInt(document.getElementById('input_inv_jumlah').value), kondisi: document.getElementById('input_inv_kondisi').value, url: document.getElementById('input_inv_url').value }); e.target.reset(); }
         window.simpanAnggotaDB = async (e) => { e.preventDefault(); const id = document.getElementById('edit-id').value; const dat = { nama: document.getElementById('admin-nama').value, angkatan: parseInt(document.getElementById('admin-angkatan').value), nohp: document.getElementById('admin-wa').value }; if(id==='') await addDoc(collection(db, "anggota"), dat); else await updateDoc(doc(db, "anggota", id), dat); window.closeModal(); }
         
         window.hapusDoc = async (col, id) => { if(confirm("Yakin ingin menghapus data ini secara permanen?")) await deleteDoc(doc(db, col, id)); }
-        window.editAnggota = (id) => { const m = arrAnggota.find(x => x.id === id); if(m){ document.getElementById('edit-id').value = id; document.getElementById('admin-nama').value = m.nama; document.getElementById('admin-angkatan').value = m.angkatan; document.getElementById('admin-wa').value = m.nohp; document.getElementById('modal-title').innerText = "Edit Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); } }
-
-        // FUNGSI UI ADMIN
+        
+        // FUNGSI UI ADMIN DASAR
         window.prosesLogin = (e) => { e.preventDefault(); if(document.getElementById('login-username').value==='admin' && document.getElementById('login-password').value==='admin123'){ document.getElementById('login-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('login-screen').style.display='none',500); } else { document.getElementById('login-error').classList.remove('hidden'); setTimeout(()=>document.getElementById('login-error').classList.add('hidden'),3000); } }
         window.logoutAdmin = () => { document.getElementById('form-login').reset(); document.getElementById('login-screen').style.display='flex'; setTimeout(()=>document.getElementById('login-screen').classList.remove('fade-out'),10); window.switchTab('dashboard'); }
         window.switchTab = (id) => { document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('bg-mansabot','text-white','shadow-md');b.classList.add('text-gray-600','hover:bg-mansabot-light');}); document.getElementById('tab-'+id).classList.add('active'); let btn=document.getElementById('btn-'+id); btn.classList.remove('text-gray-600','hover:bg-mansabot-light'); btn.classList.add('bg-mansabot','text-white','shadow-md'); }
+        
+        // MODALS
         window.openModalTambah = () => { document.getElementById('formAdminAnggota').reset(); document.getElementById('edit-id').value = ''; document.getElementById('modal-title').innerText = "Tambah Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); }
         window.closeModal = () => { document.getElementById('modalForm').classList.add('hidden'); document.getElementById('modalForm').classList.remove('flex'); }
+        window.editAnggota = (id) => { const m = arrAnggota.find(x => x.id === id); if(m){ document.getElementById('edit-id').value = id; document.getElementById('admin-nama').value = m.nama; document.getElementById('admin-angkatan').value = m.angkatan; document.getElementById('admin-wa').value = m.nohp; document.getElementById('modal-title').innerText = "Edit Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); } }
+        window.closeModalMerch = () => { document.getElementById('modalEditMerch').classList.add('hidden'); document.getElementById('modalEditMerch').classList.remove('flex'); }
+        window.editMerchTrigger = (id) => { const data = arrMerch.find(x => x.id === id); if(data) { document.getElementById('edit-merch-id').value = id; document.getElementById('edit-merch-nama').value = data.nama; document.getElementById('edit-merch-desc').value = data.desc; document.getElementById('edit-merch-url').value = data.url; document.getElementById('modalEditMerch').classList.remove('hidden'); document.getElementById('modalEditMerch').classList.add('flex'); } }
+        window.simpanEditMerch = async (e) => { e.preventDefault(); const id = document.getElementById('edit-merch-id').value; await updateDoc(doc(db, "merch", id), { nama: document.getElementById('edit-merch-nama').value, desc: document.getElementById('edit-merch-desc').value, url: document.getElementById('edit-merch-url').value }); window.closeModalMerch(); }
+        window.closeModalInv = () => { document.getElementById('modalEditInv').classList.add('hidden'); document.getElementById('modalEditInv').classList.remove('flex'); }
+        window.editInvTrigger = (id) => { const data = arrInventaris.find(x => x.id === id); if(data) { document.getElementById('edit-inv-id').value = id; document.getElementById('edit-inv-nama').value = data.nama; document.getElementById('edit-inv-jumlah').value = data.jumlah; document.getElementById('edit-inv-kondisi').value = data.kondisi; document.getElementById('edit-inv-url').value = data.url; document.getElementById('modalEditInv').classList.remove('hidden'); document.getElementById('modalEditInv').classList.add('flex'); } }
+        window.simpanEditInventaris = async (e) => { e.preventDefault(); const id = document.getElementById('edit-inv-id').value; await updateDoc(doc(db, "inventaris", id), { nama: document.getElementById('edit-inv-nama').value, jumlah: parseInt(document.getElementById('edit-inv-jumlah').value), kondisi: document.getElementById('edit-inv-kondisi').value, url: document.getElementById('edit-inv-url').value }); window.closeModalInv(); }
+
     </script>
 </body>
 </html>
