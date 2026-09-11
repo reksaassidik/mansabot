@@ -91,7 +91,17 @@
                         <div><label class="block text-sm font-bold mb-1">Judul Utama</label><input type="text" id="set-judul" class="w-full px-4 py-2 border rounded-lg"></div>
                         <div><label class="block text-sm font-bold mb-1">Slogan Singkat</label><textarea id="set-desc" rows="3" class="w-full px-4 py-2 border rounded-lg"></textarea></div>
                         <div><label class="block text-sm font-bold mb-1">URL Gambar Utama (Link Direct)</label><input type="text" id="set-img" placeholder="https://..." class="w-full px-4 py-2 border rounded-lg"></div>
-                        <button type="submit" class="w-full sm:w-auto bg-mansabot text-white font-bold py-2 px-6 rounded-lg">Simpan ke Server</button>
+                        
+                        <!-- Penambahan Link BGM dan Google Drive -->
+                        <div class="border-t pt-4 mt-2">
+                            <h3 class="font-bold text-mansabot-dark mb-3"><i class="fa-solid fa-music"></i> Pengaturan Musik BGM & Dokumentasi</h3>
+                            <div class="space-y-4">
+                                <div><label class="block text-sm font-bold mb-1">URL Musik Latar / BGM (Link MP3)</label><input type="text" id="set-bgm" placeholder="https://contoh.com/music.mp3" class="w-full px-4 py-2 border rounded-lg bg-blue-50 focus:bg-white focus:ring-mansabot"></div>
+                                <div><label class="block text-sm font-bold mb-1">Link Google Drive Dokumentasi</label><input type="text" id="set-gdrive" placeholder="https://drive.google.com/..." class="w-full px-4 py-2 border rounded-lg bg-blue-50 focus:bg-white focus:ring-mansabot"></div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full sm:w-auto bg-mansabot text-white font-bold py-2 px-8 rounded-lg mt-4">Simpan ke Server</button>
                     </form>
                 </div>
             </div>
@@ -347,6 +357,10 @@
                 document.getElementById('set-img').value = d.imgHome || ""; document.getElementById('str-pembina').value = d.pembina || "";
                 document.getElementById('str-ketua').value = d.ketua || ""; document.getElementById('str-wakil').value = d.wakil || "";
                 document.getElementById('str-sekre').value = d.sekre || ""; document.getElementById('str-benda').value = d.benda || "";
+                
+                // DATA BGM & GDRIVE
+                document.getElementById('set-bgm').value = d.bgmUrl || "";
+                document.getElementById('set-gdrive').value = d.gdriveUrl || "";
             }
         });
 
@@ -417,7 +431,7 @@
         // FUNGSI UMUM WRITE FIREBASE
         window.ubahKodeKunci = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKunci: document.getElementById('input-kode-ubah').value }, { merge: true }); alert("Kode Pendaftaran Diperbarui!"); }
         window.ubahPINKeuangan = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKeuangan: document.getElementById('input-pin-keuangan-ubah').value }, { merge: true }); alert("PIN Keuangan Diperbarui!"); }
-        window.simpanPengaturanUmum = async (e) => { e.preventDefault(); await setDoc(doc(db, "pengaturan", "umum"), { judulWeb: document.getElementById('set-judul').value, deskripsiWeb: document.getElementById('set-desc').value, imgHome: document.getElementById('set-img').value }, { merge: true }); alert("Tampilan Utama Disimpan!"); }
+        window.simpanPengaturanUmum = async (e) => { e.preventDefault(); await setDoc(doc(db, "pengaturan", "umum"), { judulWeb: document.getElementById('set-judul').value, deskripsiWeb: document.getElementById('set-desc').value, imgHome: document.getElementById('set-img').value, bgmUrl: document.getElementById('set-bgm').value, gdriveUrl: document.getElementById('set-gdrive').value }, { merge: true }); alert("Tampilan Utama Disimpan!"); }
         window.simpanStrukturInti = async () => { await setDoc(doc(db, "pengaturan", "umum"), { pembina: document.getElementById('str-pembina').value, ketua: document.getElementById('str-ketua').value, wakil: document.getElementById('str-wakil').value, sekre: document.getElementById('str-sekre').value, benda: document.getElementById('str-benda').value }, { merge: true }); alert("Struktur Inti Disimpan!"); }
         window.tambahDivisi = async (e) => { e.preventDefault(); await addDoc(collection(db, "divisi"), { namaJabatan: document.getElementById('div-jabatan').value, namaAnggota: document.getElementById('div-nama').value }); document.getElementById('div-jabatan').value = ''; document.getElementById('div-nama').value = ''; }
         window.tambahGaleri = async (e) => { e.preventDefault(); await addDoc(collection(db, "galeri"), { url: document.getElementById('input_galeri_url').value }); document.getElementById('input_galeri_url').value = ''; }
