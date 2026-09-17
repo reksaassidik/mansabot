@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tambahan Script Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Poppins', 'sans-serif'] }, colors: { mansabot: { light: '#e0f2fe', DEFAULT: '#0ea5e9', dark: '#0369a1' } } } } }
     </script>
@@ -15,16 +17,10 @@
         .slide-content { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease-in-out; }
         .slide-content.active { display: block; opacity: 1; transform: translateY(0); animation: fadeIn 0.6s forwards; }
         .modal-enter { animation: modalFadeIn 0.3s ease-out forwards; }
-        .modal-exit { animation: modalFadeOut 0.3s ease-in forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        @keyframes modalFadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
         .org-line-vertical { width: 2px; height: 30px; background-color: #0ea5e9; margin: 0 auto; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 4px; }
-        
-        /* Animasi Musik Latar */
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 4px; }
         @keyframes pulseMusic { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.6); opacity: 0; } }
         .playing-waves { animation: pulseMusic 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
     </style>
@@ -52,14 +48,34 @@
     </nav>
 
     <div class="pt-24 pb-12 min-h-screen">
-        <!-- HOME, STRUKTUR, ANGGOTA -->
-        <div id="home" class="slide-content active max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10"><div class="flex flex-col-reverse md:flex-row items-center justify-between gap-10"><div class="w-full md:w-1/2 text-center md:text-left"><span class="text-mansabot font-semibold tracking-wider uppercase text-sm bg-mansabot-light px-3 py-1 rounded-full">MAN 1 Metro Lampung</span><h1 id="ui-judul" class="text-4xl md:text-6xl font-extrabold text-gray-900 mt-4 leading-tight">Memuat...</h1><p id="ui-desc" class="text-base md:text-lg text-gray-600 mt-6 mb-8">Menghubungkan ke server...</p><button onclick="window.changeSlide('anggota')" class="bg-mansabot hover:bg-mansabot-dark text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-blue-300 transform hover:scale-105 transition-all">Gabung Bersama Kami <i class="fa-solid fa-arrow-right ml-2"></i></button></div><div class="w-full md:w-1/2 flex justify-center relative mt-6 md:mt-0"><div class="absolute w-64 h-64 md:w-72 md:h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div><div class="w-full aspect-[4/3] max-w-lg rounded-3xl shadow-2xl relative z-10 border-4 border-white overflow-hidden bg-gray-100"><img id="ui-img-home" src="https://via.placeholder.com/800x600?text=Memuat+Gambar..." alt="Robotik" class="w-full h-full object-cover"></div></div></div></div>
+        <!-- HOME -->
+        <div id="home" class="slide-content active max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-10">
+                <div class="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
+                    <span class="text-mansabot font-semibold tracking-wider uppercase text-sm bg-mansabot-light px-3 py-1 rounded-full">MAN 1 Metro Lampung</span>
+                    
+                    <!-- LOTTIE MASKOT ROBOT DI TAMPILAN AWAL -->
+                    <div class="mt-8 mb-2">
+                        <lottie-player src="https://lottie.host/cd5803fd-000f-4acd-8564-7ff6a17c7de8/ejSUSqYB3c.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></lottie-player>
+                    </div>
+
+                    <h1 id="ui-judul" class="text-4xl md:text-6xl font-extrabold text-gray-900 mt-2 leading-tight">Memuat...</h1>
+                    <p id="ui-desc" class="text-base md:text-lg text-gray-600 mt-6 mb-8">Menghubungkan ke server...</p>
+                    <button onclick="window.changeSlide('anggota')" class="bg-mansabot hover:bg-mansabot-dark text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-blue-300 transform hover:scale-105 transition-all">Gabung Bersama Kami <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center relative mt-6 md:mt-0">
+                    <div class="absolute w-64 h-64 md:w-72 md:h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div>
+                    <div class="w-full aspect-[4/3] max-w-lg rounded-3xl shadow-2xl relative z-10 border-4 border-white overflow-hidden bg-gray-100">
+                        <img id="ui-img-home" src="https://via.placeholder.com/800x600?text=Memuat+Gambar..." alt="Robotik" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div id="struktur" class="slide-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-900">Struktur Organisasi</h2><div class="w-24 h-1 bg-mansabot mx-auto mt-4 rounded-full"></div></div><div class="flex flex-col items-center overflow-x-auto pb-6 w-full no-scrollbar"><div class="min-w-[600px] flex flex-col items-center"><div class="bg-white p-4 rounded-xl shadow-md border-t-4 border-mansabot text-center w-64"><h3 id="ui-pembina" class="font-bold text-gray-800">-</h3><p class="text-sm text-mansabot font-medium">Pembina Ekskul</p></div><div class="org-line-vertical"></div><div class="flex gap-10 relative"><div class="absolute top-0 left-1/4 right-1/4 h-1 border-t-2 border-mansabot w-1/2 z-0"></div><div class="relative z-10"><div class="org-line-vertical -mt-1 mx-auto h-6"></div><div class="bg-white p-4 rounded-xl shadow-md border-t-4 border-blue-400 text-center w-48"><h3 id="ui-ketua" class="font-bold text-gray-800">-</h3><p class="text-sm text-blue-500 font-medium">Ketua Umum</p></div></div><div class="relative z-10"><div class="org-line-vertical -mt-1 mx-auto h-6"></div><div class="bg-white p-4 rounded-xl shadow-md border-t-4 border-blue-400 text-center w-48"><h3 id="ui-wakil" class="font-bold text-gray-800">-</h3><p class="text-sm text-blue-500 font-medium">Wakil Ketua</p></div></div></div><div class="org-line-vertical"></div><div class="flex gap-10 relative"><div class="absolute top-0 left-1/4 right-1/4 h-1 border-t-2 border-mansabot w-1/2 z-0"></div><div class="relative z-10"><div class="org-line-vertical -mt-1 mx-auto h-6"></div><div class="bg-white p-4 rounded-xl shadow-md border-t-4 border-indigo-400 text-center w-48"><h3 id="ui-sekre" class="font-bold text-gray-800">-</h3><p class="text-sm text-indigo-500 font-medium">Sekretaris</p></div></div><div class="relative z-10"><div class="org-line-vertical -mt-1 mx-auto h-6"></div><div class="bg-white p-4 rounded-xl shadow-md border-t-4 border-indigo-400 text-center w-48"><h3 id="ui-benda" class="font-bold text-gray-800">-</h3><p class="text-sm text-indigo-500 font-medium">Bendahara</p></div></div></div></div><div id="ui-container-divisi" class="flex flex-wrap justify-center gap-4 md:gap-6 mt-8 w-full max-w-5xl"></div></div></div>
         
         <div id="anggota" class="slide-content max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="text-center mb-8"><h2 class="text-3xl font-bold text-gray-900">Daftar Anggota & Alumni</h2><div class="w-24 h-1 bg-mansabot mx-auto mt-4 rounded-full mb-6"></div><button onclick="window.openModal()" class="bg-mansabot hover:bg-mansabot-dark text-white font-bold py-2 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all flex items-center gap-2 mx-auto"><i class="fa-solid fa-user-plus"></i> Daftar Anggota Baru</button></div><div class="relative max-w-md mx-auto mb-10"><input type="text" id="searchInput" onkeyup="window.searchFunction()" placeholder="Cari nama..." class="w-full px-5 py-3 pl-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mansabot shadow-sm"><i class="fa-solid fa-search absolute left-4 top-4 text-gray-400"></i></div><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="bg-white rounded-2xl shadow-sm border p-6"><h3 class="text-xl font-bold text-mansabot-dark mb-4 flex items-center gap-2"><i class="fa-solid fa-users"></i> Anggota Aktif</h3><ul id="listAnggota" class="space-y-3 max-h-[500px] overflow-y-auto pr-2"></ul></div><div class="bg-white rounded-2xl shadow-sm border p-6"><h3 class="text-xl font-bold text-gray-600 mb-4 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Alumni</h3><ul id="listAlumni" class="space-y-3 max-h-[500px] overflow-y-auto pr-2"></ul></div></div></div>
         
-        <!-- GALERI, MERCH & DOKUMENTASI GDRIVE -->
         <div id="galeri" class="slide-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10"><h2 class="text-3xl font-bold text-gray-900">Galeri & Atribut</h2><div class="w-24 h-1 bg-mansabot mx-auto mt-4 rounded-full mb-6"></div></div>
             <h3 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-mansabot pl-3">Merchandise & PDH</h3>
@@ -68,7 +84,6 @@
             <h3 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-blue-400 pl-3">Kegiatan Robotik</h3>
             <div id="ui-container-galeri" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
 
-            <!-- TOMBOL GOOGLE DRIVE DOKUMENTASI -->
             <div class="mt-16 text-center flex flex-col items-center bg-blue-50 p-8 rounded-3xl border border-blue-100">
                 <h3 class="text-2xl font-bold text-gray-800 mb-2">Arsip Dokumentasi Lengkap</h3>
                 <p class="text-gray-500 mb-6 text-sm">Kumpulan foto dan video kegiatan MANSABOT secara lengkap di Google Drive.</p>
@@ -84,59 +99,24 @@
         
         <div id="inventaris" class="slide-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-900">Inventaris Robotik</h2><div class="w-24 h-1 bg-indigo-500 mx-auto mt-4 rounded-full"></div></div><div id="ui-container-inventaris" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div></div>
 
-        <!-- KEUANGAN EKSKUL (DENGAN CHECKLIST KAS ANGGOTA) -->
         <div id="keuangan" class="slide-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-900">Transparansi Keuangan</h2><div class="w-24 h-1 bg-green-500 mx-auto mt-4 rounded-full"></div></div>
-
-            <!-- INDIKATOR SALDO GLOBAL -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-l-green-500">
-                    <div class="w-14 h-14 bg-green-100 text-green-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-arrow-down"></i></div>
-                    <div><h3 class="text-gray-500 text-sm font-bold">Total Pemasukan</h3><p id="ui-uang-masuk" class="text-xl font-bold mt-1 text-green-600">Rp 0</p></div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-l-red-500">
-                    <div class="w-14 h-14 bg-red-100 text-red-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-arrow-up"></i></div>
-                    <div><h3 class="text-gray-500 text-sm font-bold">Total Pengeluaran</h3><p id="ui-uang-keluar" class="text-xl font-bold mt-1 text-red-600">Rp 0</p></div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-l-blue-500">
-                    <div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-wallet"></i></div>
-                    <div><h3 class="text-gray-500 text-sm font-bold">Saldo Akhir</h3><p id="ui-saldo-akhir" class="text-2xl font-bold mt-1 text-blue-600">Rp 0</p></div>
-                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-l-green-500"><div class="w-14 h-14 bg-green-100 text-green-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-arrow-down"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Total Pemasukan</h3><p id="ui-uang-masuk" class="text-xl font-bold mt-1 text-green-600">Rp 0</p></div></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-l-red-500"><div class="w-14 h-14 bg-red-100 text-red-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-arrow-up"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Total Pengeluaran</h3><p id="ui-uang-keluar" class="text-xl font-bold mt-1 text-red-600">Rp 0</p></div></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-l-blue-500"><div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl"><i class="fa-solid fa-wallet"></i></div><div><h3 class="text-gray-500 text-sm font-bold">Saldo Akhir</h3><p id="ui-saldo-akhir" class="text-2xl font-bold mt-1 text-blue-600">Rp 0</p></div></div>
             </div>
-
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                
-                <!-- 1. TABEL CHECKLIST KAS ANGGOTA (READ-ONLY) -->
                 <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col h-[500px]">
-                    <div class="flex justify-between items-center mb-4 border-b pb-2">
-                        <h3 class="text-xl font-bold"><i class="fa-solid fa-clipboard-list text-blue-500"></i> Laporan Uang Kas</h3>
-                    </div>
-                    
-                    <div class="flex items-center gap-3 mb-4 bg-gray-50 p-3 rounded-lg border">
-                        <label class="text-sm font-bold text-gray-600">Pilih Bulan/Tahun:</label>
-                        <input type="month" id="ui-periode-kas" class="border px-3 py-1 rounded-lg font-bold bg-white focus:ring-blue-500" onchange="window.ubahPeriodeKasUI(this.value)">
-                    </div>
-
-                    <div class="overflow-y-auto flex-1 pr-2">
-                        <table class="w-full text-left border-collapse">
-                            <tbody id="ui-tabel-checklist-kas" class="text-sm"></tbody>
-                        </table>
-                    </div>
+                    <div class="flex justify-between items-center mb-4 border-b pb-2"><h3 class="text-xl font-bold"><i class="fa-solid fa-clipboard-list text-blue-500"></i> Laporan Uang Kas</h3></div>
+                    <div class="flex items-center gap-3 mb-4 bg-gray-50 p-3 rounded-lg border"><label class="text-sm font-bold text-gray-600">Pilih Bulan/Tahun:</label><input type="month" id="ui-periode-kas" class="border px-3 py-1 rounded-lg font-bold bg-white focus:ring-blue-500" onchange="window.ubahPeriodeKasUI(this.value)"></div>
+                    <div class="overflow-y-auto flex-1 pr-2"><table class="w-full text-left border-collapse"><tbody id="ui-tabel-checklist-kas" class="text-sm"></tbody></table></div>
                 </div>
-
-                <!-- 2. TABEL TRANSAKSI UMUM (READ-ONLY) -->
                 <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col h-[500px]">
                     <h3 class="text-xl font-bold mb-4 border-b pb-2"><i class="fa-solid fa-history text-gray-500"></i> Riwayat Transaksi Lainnya</h3>
-                    
-                    <div class="overflow-y-auto flex-1 pr-2">
-                        <table class="w-full text-left border-collapse min-w-max">
-                            <thead><tr class="bg-gray-50 border-b"><th class="py-2 px-3">Tanggal</th><th class="py-2 px-3">Keterangan</th><th class="py-2 px-3 text-right">Nominal</th></tr></thead>
-                            <tbody id="ui-tabel-transaksi-umum" class="text-sm"></tbody>
-                        </table>
-                    </div>
+                    <div class="overflow-y-auto flex-1 pr-2"><table class="w-full text-left border-collapse min-w-max"><thead><tr class="bg-gray-50 border-b"><th class="py-2 px-3">Tanggal</th><th class="py-2 px-3">Keterangan</th><th class="py-2 px-3 text-right">Nominal</th></tr></thead><tbody id="ui-tabel-transaksi-umum" class="text-sm"></tbody></table></div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -145,12 +125,19 @@
         <audio id="bgm-audio" loop></audio>
         <div class="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-tr from-mansabot-dark to-mansabot text-white shadow-md mr-3">
             <i id="bgm-icon" class="fa-solid fa-play ml-0.5 text-sm"></i>
-            <!-- Animasi gelombang -->
             <div id="bgm-waves" class="absolute inset-0 rounded-full border-2 border-mansabot opacity-0"></div>
         </div>
         <div class="flex flex-col pr-2">
             <span class="text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-mansabot-dark to-mansabot">BGM MANSABOT</span>
             <span id="bgm-status" class="text-[10px] text-gray-500 font-semibold">Klik untuk Putar</span>
+        </div>
+    </div>
+
+    <!-- MODAL LOTTIE GLOBAL UNTUK NOTIFIKASI SUCCESS -->
+    <div id="modalLottie" class="fixed inset-0 z-[150] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4 transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-3xl p-8 shadow-2xl flex flex-col items-center transform scale-95 transition-transform duration-300" id="lottieBox">
+            <lottie-player id="lottiePlayer" background="transparent" speed="1" style="width: 200px; height: 200px;"></lottie-player>
+            <h3 id="lottieMessage" class="text-xl font-bold text-gray-800 mt-2 text-center"></h3>
         </div>
     </div>
 
@@ -182,66 +169,47 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // ==== LOGIC ANIMASI LOTTIE GLOBAL ====
+        window.playLottie = (type, message, onConfirm = null) => {
+            const modal = document.getElementById('modalLottie');
+            const box = document.getElementById('lottieBox');
+            const player = document.getElementById('lottiePlayer');
+            document.getElementById('lottieMessage').innerText = message;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
+
+            if (type === 'success') {
+                player.load('https://lottie.host/44b5b790-70f8-4963-9173-4394ab6a5c72/CfuM4EW4ez.json');
+                player.loop = false; player.play();
+                setTimeout(() => { window.closeLottie(); if(onConfirm) onConfirm(); }, 2500);
+            }
+        };
+        window.closeLottie = () => {
+            const modal = document.getElementById('modalLottie');
+            modal.classList.add('opacity-0'); document.getElementById('lottieBox').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
         let globalKodeKunci = "2020";
         const formatRupiah = (angka) => { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
 
-        // MENGATUR BULAN SAAT INI UNTUK FILTER KAS
         const getBulanSekarang = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
-        let uiPeriodeKasAktif = getBulanSekarang();
-        document.getElementById('ui-periode-kas').value = uiPeriodeKasAktif;
+        let uiPeriodeKasAktif = getBulanSekarang(); document.getElementById('ui-periode-kas').value = uiPeriodeKasAktif;
 
-        // GLOBAL KEUANGAN STATE
-        let uiTotalKasMurni = 0;
-        let uiTotalUmumMasuk = 0;
-        let uiTotalUmumKeluar = 0;
-        let uiArrKasAnggota = [];
-        let uiArrAnggotaAktif = [];
+        let uiTotalKasMurni = 0; let uiTotalUmumMasuk = 0; let uiTotalUmumKeluar = 0;
+        let uiArrKasAnggota = []; let uiArrAnggotaAktif = [];
 
-        // GLOBAL MUSIC STATE
-        let isMusicPlaying = false;
-        const audioEl = document.getElementById('bgm-audio');
-
-        // FUNGSI TOGGLE MUSIK
+        let isMusicPlaying = false; const audioEl = document.getElementById('bgm-audio');
         window.toggleMusic = () => {
-            if(!audioEl.src || audioEl.src.endsWith('#') || audioEl.src === window.location.href) {
-                alert("Link Musik belum diatur oleh Admin!");
-                return;
-            }
-            if(isMusicPlaying) {
-                audioEl.pause();
-                isMusicPlaying = false;
-                document.getElementById('bgm-icon').className = 'fa-solid fa-play ml-0.5 text-sm';
-                document.getElementById('bgm-waves').classList.remove('playing-waves');
-                document.getElementById('bgm-status').innerText = 'Jeda';
-            } else {
-                audioEl.play().then(() => {
-                    isMusicPlaying = true;
-                    document.getElementById('bgm-icon').className = 'fa-solid fa-pause text-sm';
-                    document.getElementById('bgm-waves').classList.add('playing-waves');
-                    document.getElementById('bgm-status').innerText = 'Sedang diputar...';
-                }).catch(e => console.log('Browser memblokir autoplay:', e));
-            }
+            if(!audioEl.src || audioEl.src.endsWith('#') || audioEl.src === window.location.href) { alert("Link Musik belum diatur oleh Admin!"); return; }
+            if(isMusicPlaying) { audioEl.pause(); isMusicPlaying = false; document.getElementById('bgm-icon').className = 'fa-solid fa-play ml-0.5 text-sm'; document.getElementById('bgm-waves').classList.remove('playing-waves'); document.getElementById('bgm-status').innerText = 'Jeda'; } 
+            else { audioEl.play().then(() => { isMusicPlaying = true; document.getElementById('bgm-icon').className = 'fa-solid fa-pause text-sm'; document.getElementById('bgm-waves').classList.add('playing-waves'); document.getElementById('bgm-status').innerText = 'Sedang diputar...'; }).catch(e => console.log('Browser memblokir autoplay:', e)); }
         };
+        document.body.addEventListener('click', function initBGM(e) { if(!isMusicPlaying && audioEl.src && !e.target.closest('#music-player')) { window.toggleMusic(); } document.body.removeEventListener('click', initBGM); }, { once: true });
 
-        // AUTO-PLAY LISTENER: Mencoba mutar musik otomatis saat user pertama klik dimanapun di website (Bypass blokir autoplay browser)
-        document.body.addEventListener('click', function initBGM(e) {
-            if(!isMusicPlaying && audioEl.src && !e.target.closest('#music-player')) {
-                window.toggleMusic();
-            }
-            document.body.removeEventListener('click', initBGM);
-        }, { once: true });
+        const hitungStatistikKeuanganUI = () => { let totalMasuk = uiTotalKasMurni + uiTotalUmumMasuk; let saldoAkhir = totalMasuk - uiTotalUmumKeluar; document.getElementById('ui-uang-masuk').innerText = formatRupiah(totalMasuk); document.getElementById('ui-uang-keluar').innerText = formatRupiah(uiTotalUmumKeluar); document.getElementById('ui-saldo-akhir').innerText = formatRupiah(saldoAkhir); }
 
-
-        // UPDATE STATISTIK GLOBAL
-        const hitungStatistikKeuanganUI = () => {
-            let totalMasuk = uiTotalKasMurni + uiTotalUmumMasuk;
-            let saldoAkhir = totalMasuk - uiTotalUmumKeluar;
-            document.getElementById('ui-uang-masuk').innerText = formatRupiah(totalMasuk);
-            document.getElementById('ui-uang-keluar').innerText = formatRupiah(uiTotalUmumKeluar);
-            document.getElementById('ui-saldo-akhir').innerText = formatRupiah(saldoAkhir);
-        }
-
-        // SYNC PENGATURAN UMUM
         onSnapshot(doc(db, "pengaturan", "umum"), (docSnap) => {
             if (docSnap.exists()) {
                 const d = docSnap.data();
@@ -254,31 +222,24 @@
                 if(d.wakil) document.getElementById('ui-wakil').innerText = d.wakil;
                 if(d.sekre) document.getElementById('ui-sekre').innerText = d.sekre;
                 if(d.benda) document.getElementById('ui-benda').innerText = d.benda;
-                
-                // Setel link BGM & Google Drive
                 if(d.bgmUrl && audioEl.src !== d.bgmUrl) audioEl.src = d.bgmUrl;
                 if(d.gdriveUrl) document.getElementById('btn-gdrive').href = d.gdriveUrl;
             }
         });
 
-        // SYNC DIVISI, GALERI, PRESTASI, MERCH, INVENTARIS
         onSnapshot(collection(db, "divisi"), (snapshot) => { const container = document.getElementById('ui-container-divisi'); container.innerHTML = ''; snapshot.forEach(doc => { const d = doc.data(); container.innerHTML += `<div class="bg-white shadow-sm hover:shadow-md transition p-4 rounded-xl text-center w-40 md:w-48 border-t-4 border-blue-200"><h3 class="font-bold text-mansabot-dark text-sm md:text-base">${d.namaJabatan}</h3><p class="text-xs text-gray-600 mt-1">${d.namaAnggota}</p></div>`; }); });
         onSnapshot(collection(db, "merch"), (snapshot) => { const container = document.getElementById('ui-container-merch'); container.innerHTML = ''; snapshot.forEach(doc => { const d = doc.data(); container.innerHTML += `<div class="bg-white rounded-2xl overflow-hidden shadow-sm border hover:shadow-lg transition flex flex-col h-full"><div class="w-full aspect-square bg-gray-100 overflow-hidden relative"><img src="${d.url}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"></div><div class="p-5 flex-1 flex flex-col justify-between"><h3 class="text-lg font-bold text-gray-900 line-clamp-1">${d.nama}</h3><p class="text-sm text-gray-600 mt-2 line-clamp-2">${d.desc}</p></div></div>`; }); });
         onSnapshot(collection(db, "galeri"), (snapshot) => { const container = document.getElementById('ui-container-galeri'); container.innerHTML = ''; snapshot.forEach(doc => { container.innerHTML += `<div class="w-full aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition"><img src="${doc.data().url}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>`; }); });
         onSnapshot(collection(db, "prestasi"), (snapshot) => { const container = document.getElementById('ui-container-prestasi'); container.innerHTML = ''; snapshot.forEach(doc => { const d = doc.data(); container.innerHTML += `<div class="bg-white rounded-2xl overflow-hidden shadow-sm border hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full"><div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden relative"><img src="${d.url}" class="w-full h-full object-cover"></div><div class="p-6 flex-1 relative flex flex-col"><div class="absolute -top-6 right-6 bg-yellow-400 w-12 h-12 flex items-center justify-center rounded-full shadow-lg border-4 border-white z-10"><i class="fa-solid fa-trophy text-white text-xl"></i></div><h3 class="text-lg font-bold text-gray-900 mb-2 pr-10 line-clamp-2">${d.judul}</h3><p class="text-sm text-gray-600 flex-1">${d.desc}</p></div></div>`; }); });
         onSnapshot(collection(db, "inventaris"), (snapshot) => { const container = document.getElementById('ui-container-inventaris'); container.innerHTML = ''; snapshot.forEach(doc => { const d = doc.data(); let badgeColor = d.kondisi === 'Baik' ? 'bg-green-100 text-green-700' : (d.kondisi === 'Rusak Ringan' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'); container.innerHTML += `<div class="bg-white rounded-2xl overflow-hidden shadow-sm border hover:shadow-lg transition flex flex-col h-full"><div class="w-full aspect-[4/3] bg-gray-50 overflow-hidden relative group"><img src="${d.url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"><span class="absolute top-3 right-3 px-3 py-1 text-xs font-bold rounded-full ${badgeColor} shadow-sm backdrop-blur-md bg-opacity-90 border border-white/50">${d.kondisi}</span></div><div class="p-5 flex-1 flex flex-col justify-between"><h3 class="text-lg font-bold text-gray-800 line-clamp-1">${d.nama}</h3><div class="mt-3 flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600"><i class="fa-solid fa-layer-group text-sm"></i></div><p class="text-sm font-semibold text-gray-600">Stok: <span class="text-indigo-600 font-bold">${d.jumlah}</span> unit</p></div></div></div>`; }); });
 
-        // SYNC ANGGOTA (DIBAGI AKTIF DAN ALUMNI)
         onSnapshot(collection(db, "anggota"), (snapshot) => {
-            const listAnggotaEl = document.getElementById('listAnggota');
-            const listAlumniEl = document.getElementById('listAlumni');
-            listAnggotaEl.innerHTML = ''; listAlumniEl.innerHTML = '';
-            uiArrAnggotaAktif = [];
+            const listAnggotaEl = document.getElementById('listAnggota'); const listAlumniEl = document.getElementById('listAlumni');
+            listAnggotaEl.innerHTML = ''; listAlumniEl.innerHTML = ''; uiArrAnggotaAktif = [];
             const thnAjaran = (new Date().getMonth() >= 6) ? new Date().getFullYear() : new Date().getFullYear() - 1;
 
             snapshot.forEach(docSnap => {
-                const member = docSnap.data();
-                let selisih = thnAjaran - member.angkatan;
+                const member = docSnap.data(); let selisih = thnAjaran - member.angkatan;
                 let isAlumni = false; let statusKelas = "";
                 
                 if (selisih === 0) statusKelas = "Kelas X"; else if (selisih === 1) statusKelas = "Kelas XI"; else if (selisih === 2) statusKelas = "Kelas XII"; else { statusKelas = "Alumni " + member.angkatan; isAlumni = true; }
@@ -293,81 +254,27 @@
             window.renderChecklistKasUI();
         });
 
+        onSnapshot(collection(db, "kas_anggota"), (snap) => { uiArrKasAnggota = []; uiTotalKasMurni = 0; snap.forEach(d => { const data = d.data(); uiArrKasAnggota.push({id: d.id, ...data}); uiTotalKasMurni += data.nominal; }); window.renderChecklistKasUI(); hitungStatistikKeuanganUI(); });
+        window.ubahPeriodeKasUI = (val) => { if(!val) return; uiPeriodeKasAktif = val; window.renderChecklistKasUI(); };
+        window.renderChecklistKasUI = () => { const tbody = document.getElementById('ui-tabel-checklist-kas'); if(!uiArrAnggotaAktif) return; tbody.innerHTML = ''; uiArrAnggotaAktif.forEach(m => { const docId = `${m.id}_${uiPeriodeKasAktif}`; const kas = uiArrKasAnggota.find(x => x.id === docId); let isLunas = !!kas; let badge = isLunas ? `<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold shadow-sm inline-block w-20 text-center border border-green-200"><i class="fa-solid fa-check mr-1"></i>Lunas</span>` : `<span class="bg-red-50 text-red-500 px-3 py-1 rounded-full text-xs font-bold inline-block w-20 text-center border border-red-100">Belum</span>`; let infoTgl = isLunas ? `<span class="text-xs text-gray-400 block mt-1"><i class="fa-regular fa-clock"></i> ${new Date(kas.timestamp).toLocaleDateString('id-ID')}</span>` : ''; tbody.innerHTML += `<tr class="border-b hover:bg-gray-50 transition-colors"><td class="py-3 px-2"> <p class="font-bold text-gray-800">${m.nama}</p> ${infoTgl} </td><td class="py-3 px-2 text-right">${badge}</td></tr>`; }); };
 
-        // === SYNC KAS BULANAN ANGGOTA ===
-        onSnapshot(collection(db, "kas_anggota"), (snap) => {
-            uiArrKasAnggota = [];
-            uiTotalKasMurni = 0;
-            snap.forEach(d => {
-                const data = d.data();
-                uiArrKasAnggota.push({id: d.id, ...data});
-                uiTotalKasMurni += data.nominal;
-            });
-            window.renderChecklistKasUI();
-            hitungStatistikKeuanganUI();
-        });
-
-        window.ubahPeriodeKasUI = (val) => {
-            if(!val) return;
-            uiPeriodeKasAktif = val;
-            window.renderChecklistKasUI();
-        };
-
-        window.renderChecklistKasUI = () => {
-            const tbody = document.getElementById('ui-tabel-checklist-kas');
-            if(!uiArrAnggotaAktif) return;
-            tbody.innerHTML = '';
-            
-            uiArrAnggotaAktif.forEach(m => {
-                const docId = `${m.id}_${uiPeriodeKasAktif}`;
-                const kas = uiArrKasAnggota.find(x => x.id === docId);
-                
-                let isLunas = !!kas;
-                let badge = isLunas ? `<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold shadow-sm inline-block w-20 text-center border border-green-200"><i class="fa-solid fa-check mr-1"></i>Lunas</span>` : `<span class="bg-red-50 text-red-500 px-3 py-1 rounded-full text-xs font-bold inline-block w-20 text-center border border-red-100">Belum</span>`;
-                let infoTgl = isLunas ? `<span class="text-xs text-gray-400 block mt-1"><i class="fa-regular fa-clock"></i> ${new Date(kas.timestamp).toLocaleDateString('id-ID')}</span>` : '';
-
-                tbody.innerHTML += `<tr class="border-b hover:bg-gray-50 transition-colors"><td class="py-3 px-2"> <p class="font-bold text-gray-800">${m.nama}</p> ${infoTgl} </td><td class="py-3 px-2 text-right">${badge}</td></tr>`;
-            });
-        };
-
-
-        // === SYNC TRANSAKSI UMUM ===
         const qTransaksiUmum = query(collection(db, "transaksi_umum"), orderBy("tanggal", "desc"));
-        onSnapshot(qTransaksiUmum, (snapshot) => {
-            const tabel = document.getElementById('ui-tabel-transaksi-umum'); tabel.innerHTML = '';
-            uiTotalUmumMasuk = 0; uiTotalUmumKeluar = 0;
-            
-            snapshot.forEach(docSnap => {
-                const tr = docSnap.data();
-                if(tr.jenis === 'masuk') uiTotalUmumMasuk += tr.nominal;
-                else uiTotalUmumKeluar += tr.nominal;
+        onSnapshot(qTransaksiUmum, (snapshot) => { const tabel = document.getElementById('ui-tabel-transaksi-umum'); tabel.innerHTML = ''; uiTotalUmumMasuk = 0; uiTotalUmumKeluar = 0; snapshot.forEach(docSnap => { const tr = docSnap.data(); if(tr.jenis === 'masuk') uiTotalUmumMasuk += tr.nominal; else uiTotalUmumKeluar += tr.nominal; const dateParts = tr.tanggal.split('-'); const tglFormat = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : tr.tanggal; let iconClass = tr.jenis === 'masuk' ? 'text-green-500 fa-arrow-down' : 'text-red-500 fa-arrow-up'; let classNominal = tr.jenis === 'masuk' ? 'text-green-600' : 'text-red-600'; tabel.innerHTML += `<tr class="border-b hover:bg-gray-50"> <td class="py-3 px-3 text-gray-500 text-xs whitespace-nowrap">${tglFormat}</td> <td class="py-3 px-3 font-medium text-gray-800">${tr.keterangan}</td> <td class="py-3 px-3 font-bold ${classNominal} text-right whitespace-nowrap"><i class="fa-solid ${iconClass} text-xs mr-1"></i>${formatRupiah(tr.nominal)}</td> </tr>`; }); hitungStatistikKeuanganUI(); });
 
-                const dateParts = tr.tanggal.split('-');
-                const tglFormat = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : tr.tanggal;
-
-                let iconClass = tr.jenis === 'masuk' ? 'text-green-500 fa-arrow-down' : 'text-red-500 fa-arrow-up';
-                let classNominal = tr.jenis === 'masuk' ? 'text-green-600' : 'text-red-600';
-                
-                tabel.innerHTML += `<tr class="border-b hover:bg-gray-50">
-                    <td class="py-3 px-3 text-gray-500 text-xs whitespace-nowrap">${tglFormat}</td>
-                    <td class="py-3 px-3 font-medium text-gray-800">${tr.keterangan}</td>
-                    <td class="py-3 px-3 font-bold ${classNominal} text-right whitespace-nowrap"><i class="fa-solid ${iconClass} text-xs mr-1"></i>${formatRupiah(tr.nominal)}</td>
-                </tr>`;
-            });
-            hitungStatistikKeuanganUI();
-        });
-
-
-        // FUNGSI PENDAFTARAN KE FIREBASE
         window.tambahAnggotaDB = async (e) => {
             e.preventDefault();
             if (document.getElementById('inputKode').value !== globalKodeKunci) return alert("Pendaftaran Gagal: Kode Kunci salah!");
             const btn = document.getElementById('btn-submit-daftar'); btn.innerText = "Memproses..."; btn.disabled = true;
-            try { await addDoc(collection(db, "anggota"), { nama: document.getElementById('inputNama').value, angkatan: parseInt(document.getElementById('inputAngkatan').value), nohp: document.getElementById('inputWA').value }); document.getElementById('formDaftar').reset(); window.closeModal(); alert("Pendaftaran Berhasil!"); } catch (err) { alert("Gagal terhubung ke database!"); }
+            try { 
+                await addDoc(collection(db, "anggota"), { nama: document.getElementById('inputNama').value, angkatan: parseInt(document.getElementById('inputAngkatan').value), nohp: document.getElementById('inputWA').value }); 
+                document.getElementById('formDaftar').reset(); 
+                window.closeModal(); 
+                // Ganti bawaan browser alert dengan lottie player
+                window.playLottie('success', 'Pendaftaran Berhasil!');
+            } catch (err) { alert("Gagal terhubung ke database!"); }
             btn.innerText = "Daftar"; btn.disabled = false;
         };
 
-        // FUNGSI UI
         window.changeSlide = (id) => { document.querySelectorAll('.slide-content').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
         window.openModal = () => { document.getElementById('modalDaftar').classList.remove('hidden'); document.getElementById('modalDaftar').classList.add('flex'); }
         window.closeModal = () => { document.getElementById('modalDaftar').classList.add('hidden'); document.getElementById('modalDaftar').classList.remove('flex'); }
