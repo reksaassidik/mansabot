@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tambahan Script Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Poppins', 'sans-serif'] }, colors: { mansabot: { light: '#e0f2fe', DEFAULT: '#0ea5e9', dark: '#0369a1' } } } } }
     </script>
@@ -16,7 +18,6 @@
         .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
         ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 4px; }
         #login-screen { transition: opacity 0.5s ease, visibility 0.5s ease; } .fade-out { opacity: 0; visibility: hidden; }
-        /* Transisi sidebar HP */
         #sidebar { transition: transform 0.3s ease-in-out; }
     </style>
 </head>
@@ -36,14 +37,13 @@
         </div>
     </div>
 
-    <!-- SIDEBAR (RESPONSIF) -->
+    <!-- SIDEBAR -->
     <aside id="sidebar" class="w-64 bg-white shadow-xl z-50 flex flex-col border-r fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0">
         <div class="p-6 border-b flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-mansabot text-white flex items-center justify-center rounded-full shadow-lg"><i class="fa-solid fa-robot"></i></div>
                 <h2 class="text-xl font-bold text-mansabot-dark">ADMIN</h2>
             </div>
-            <!-- Tombol silang untuk tutup sidebar di HP -->
             <button onclick="window.toggleSidebar()" class="md:hidden text-gray-500 hover:text-red-500 text-2xl"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -61,7 +61,6 @@
 
     <!-- KONTEN -->
     <main class="flex-1 overflow-y-auto relative bg-slate-50 w-full">
-        <!-- HEADER (DITAMBAH TOMBOL HAMBURGER UNTUK HP) -->
         <header class="bg-white shadow-sm border-b px-4 md:px-8 py-4 flex justify-between items-center sticky top-0 z-10">
             <div class="flex items-center gap-3">
                 <button onclick="window.toggleSidebar()" class="md:hidden text-xl p-2 rounded-lg bg-gray-100 text-mansabot-dark hover:bg-gray-200"><i class="fa-solid fa-bars"></i></button>
@@ -91,8 +90,6 @@
                         <div><label class="block text-sm font-bold mb-1">Judul Utama</label><input type="text" id="set-judul" class="w-full px-4 py-2 border rounded-lg"></div>
                         <div><label class="block text-sm font-bold mb-1">Slogan Singkat</label><textarea id="set-desc" rows="3" class="w-full px-4 py-2 border rounded-lg"></textarea></div>
                         <div><label class="block text-sm font-bold mb-1">URL Gambar Utama (Link Direct)</label><input type="text" id="set-img" placeholder="https://..." class="w-full px-4 py-2 border rounded-lg"></div>
-                        
-                        <!-- Penambahan Link BGM dan Google Drive -->
                         <div class="border-t pt-4 mt-2">
                             <h3 class="font-bold text-mansabot-dark mb-3"><i class="fa-solid fa-music"></i> Pengaturan Musik BGM & Dokumentasi</h3>
                             <div class="space-y-4">
@@ -100,7 +97,6 @@
                                 <div><label class="block text-sm font-bold mb-1">Link Google Drive Dokumentasi</label><input type="text" id="set-gdrive" placeholder="https://drive.google.com/..." class="w-full px-4 py-2 border rounded-lg bg-blue-50 focus:bg-white focus:ring-mansabot"></div>
                             </div>
                         </div>
-
                         <button type="submit" class="w-full sm:w-auto bg-mansabot text-white font-bold py-2 px-8 rounded-lg mt-4">Simpan ke Server</button>
                     </form>
                 </div>
@@ -210,27 +206,17 @@
                 </div>
             </div>
 
-            <!-- KEUANGAN EKSKUL (DILENGKAPI UBAH PIN) -->
+            <!-- KEUANGAN -->
             <div id="tab-keuangan" class="tab-content">
-                <!-- FORM UBAH PIN KEUANGAN -->
                 <div class="bg-white rounded-2xl shadow-sm border p-6 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-l-4 border-yellow-400">
                     <div><h2 class="text-lg font-bold"><i class="fa-solid fa-lock text-yellow-500 mr-2"></i>PIN Akses Keuangan</h2><p class="text-sm text-gray-500">Ubah PIN khusus Bendahara.</p></div>
                     <div class="flex items-center gap-2 w-full md:w-auto"><input type="text" id="input-pin-keuangan-ubah" class="flex-1 md:w-32 px-4 py-2 border rounded-lg font-bold text-center"><button onclick="window.ubahPINKeuangan()" class="bg-yellow-400 font-bold py-2 px-4 rounded-lg">Perbarui</button></div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4">
-                        <div class="w-14 h-14 bg-green-100 text-green-600 flex items-center justify-center rounded-xl text-2xl flex-shrink-0"><i class="fa-solid fa-arrow-down"></i></div>
-                        <div class="min-w-0"><h3 class="text-gray-500 text-sm font-bold">Total Masuk</h3><p id="stat-uang-masuk" class="text-lg md:text-xl font-bold mt-1 text-green-600 truncate">Rp 0</p></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4">
-                        <div class="w-14 h-14 bg-red-100 text-red-600 flex items-center justify-center rounded-xl text-2xl flex-shrink-0"><i class="fa-solid fa-arrow-up"></i></div>
-                        <div class="min-w-0"><h3 class="text-gray-500 text-sm font-bold">Total Keluar</h3><p id="stat-uang-keluar" class="text-lg md:text-xl font-bold mt-1 text-red-600 truncate">Rp 0</p></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-blue-500">
-                        <div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl flex-shrink-0"><i class="fa-solid fa-wallet"></i></div>
-                        <div class="min-w-0"><h3 class="text-gray-500 text-sm font-bold">Saldo Akhir</h3><p id="stat-saldo-akhir" class="text-xl md:text-2xl font-bold mt-1 text-blue-600 truncate">Rp 0</p></div>
-                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4"><div class="w-14 h-14 bg-green-100 text-green-600 flex items-center justify-center rounded-xl text-2xl flex-shrink-0"><i class="fa-solid fa-arrow-down"></i></div><div class="min-w-0"><h3 class="text-gray-500 text-sm font-bold">Total Masuk</h3><p id="stat-uang-masuk" class="text-lg md:text-xl font-bold mt-1 text-green-600 truncate">Rp 0</p></div></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4"><div class="w-14 h-14 bg-red-100 text-red-600 flex items-center justify-center rounded-xl text-2xl flex-shrink-0"><i class="fa-solid fa-arrow-up"></i></div><div class="min-w-0"><h3 class="text-gray-500 text-sm font-bold">Total Keluar</h3><p id="stat-uang-keluar" class="text-lg md:text-xl font-bold mt-1 text-red-600 truncate">Rp 0</p></div></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border flex items-center gap-4 border-l-4 border-blue-500"><div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl text-2xl flex-shrink-0"><i class="fa-solid fa-wallet"></i></div><div class="min-w-0"><h3 class="text-gray-500 text-sm font-bold">Saldo Akhir</h3><p id="stat-saldo-akhir" class="text-xl md:text-2xl font-bold mt-1 text-blue-600 truncate">Rp 0</p></div></div>
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
@@ -277,40 +263,23 @@
     </main>
 
     <!-- KUMPULAN MODAL -->
-
-    <!-- MODAL LOCK KEUANGAN -->
-    <div id="modalKeuanganLock" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/80 backdrop-blur-sm px-4">
-        <div class="bg-white rounded-3xl p-8 w-full max-w-sm text-center shadow-2xl transform scale-105 transition-transform duration-300">
-            <div class="w-16 h-16 bg-blue-100 text-blue-600 mx-auto rounded-full flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-wallet"></i></div>
-            <h3 class="text-2xl font-bold mb-2 text-gray-800">Area Bendahara</h3>
-            <p class="text-sm text-gray-500 mb-6">Masukkan PIN rahasia untuk mengakses sistem keuangan.</p>
-            <input type="password" id="input-pin-bendahara" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold tracking-[0.5em] mb-6 focus:border-blue-500 focus:outline-none" placeholder="••••">
-            <div class="flex gap-3">
-                <button onclick="window.closeKeuanganLock()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition">Batal</button>
-                <button onclick="window.verifyKeuanganLock()" class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg transition">Buka</button>
+    
+    <!-- MODAL LOTTIE GLOBAL UNTUK SUCCESS DAN DELETE -->
+    <div id="modalLottie" class="fixed inset-0 z-[150] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4 transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-3xl p-8 shadow-2xl flex flex-col items-center transform scale-95 transition-transform duration-300" id="lottieBox">
+            <lottie-player id="lottiePlayer" background="transparent" speed="1" style="width: 200px; height: 200px;"></lottie-player>
+            <h3 id="lottieMessage" class="text-xl font-bold text-gray-800 mt-2 text-center"></h3>
+            <div id="lottieActions" class="mt-6 flex gap-3 hidden w-full">
+                <button onclick="window.closeLottie()" class="flex-1 bg-gray-200 text-gray-800 font-bold py-2 rounded-xl hover:bg-gray-300 transition">Batal</button>
+                <button id="lottieConfirmBtn" class="flex-1 bg-red-500 text-white font-bold py-2 rounded-xl shadow-lg hover:bg-red-600 transition">Hapus</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL EDIT PRESTASI -->
-    <div id="modalEditPrestasi" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
-            <div class="bg-yellow-500 px-6 py-4 flex justify-between items-center"><h3 class="text-xl font-bold text-white"><i class="fa-solid fa-trophy"></i> Edit Prestasi</h3><button type="button" onclick="window.closeModalPrestasi()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div>
-            <form onsubmit="window.simpanEditPrestasi(event)" class="p-6 space-y-4">
-                <input type="hidden" id="edit-prestasi-id">
-                <div><label class="text-sm font-semibold">Judul Prestasi</label><input type="text" id="edit-prestasi-judul" required class="w-full px-4 py-2 border rounded-lg"></div>
-                <div><label class="text-sm font-semibold">Deskripsi</label><input type="text" id="edit-prestasi-desc" required class="w-full px-4 py-2 border rounded-lg"></div>
-                <div><label class="text-sm font-semibold">URL Foto</label><input type="text" id="edit-prestasi-url" required class="w-full px-4 py-2 border rounded-lg"></div>
-                <button type="submit" class="w-full bg-yellow-500 text-white font-bold py-2 rounded-lg mt-2 shadow-md">Simpan Perubahan</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL ANGGOTA -->
+    <div id="modalKeuanganLock" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/80 backdrop-blur-sm px-4"><div class="bg-white rounded-3xl p-8 w-full max-w-sm text-center shadow-2xl transform scale-105 transition-transform duration-300"><div class="w-16 h-16 bg-blue-100 text-blue-600 mx-auto rounded-full flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-wallet"></i></div><h3 class="text-2xl font-bold mb-2 text-gray-800">Area Bendahara</h3><p class="text-sm text-gray-500 mb-6">Masukkan PIN rahasia untuk mengakses sistem keuangan.</p><input type="password" id="input-pin-bendahara" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold tracking-[0.5em] mb-6 focus:border-blue-500 focus:outline-none" placeholder="••••"><div class="flex gap-3"><button onclick="window.closeKeuanganLock()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition">Batal</button><button onclick="window.verifyKeuanganLock()" class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg transition">Buka</button></div></div></div>
+    <div id="modalEditPrestasi" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4"><div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"><div class="bg-yellow-500 px-6 py-4 flex justify-between items-center"><h3 class="text-xl font-bold text-white"><i class="fa-solid fa-trophy"></i> Edit Prestasi</h3><button type="button" onclick="window.closeModalPrestasi()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div><form onsubmit="window.simpanEditPrestasi(event)" class="p-6 space-y-4"><input type="hidden" id="edit-prestasi-id"><div><label class="text-sm font-semibold">Judul Prestasi</label><input type="text" id="edit-prestasi-judul" required class="w-full px-4 py-2 border rounded-lg"></div><div><label class="text-sm font-semibold">Deskripsi</label><input type="text" id="edit-prestasi-desc" required class="w-full px-4 py-2 border rounded-lg"></div><div><label class="text-sm font-semibold">URL Foto</label><input type="text" id="edit-prestasi-url" required class="w-full px-4 py-2 border rounded-lg"></div><button type="submit" class="w-full bg-yellow-500 text-white font-bold py-2 rounded-lg mt-2 shadow-md">Simpan Perubahan</button></form></div></div>
     <div id="modalForm" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4"><div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"><div class="bg-mansabot px-6 py-4 flex justify-between items-center"><h3 id="modal-title" class="text-xl font-bold text-white">Tambah Anggota</h3><button onclick="window.closeModal()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div><form id="formAdminAnggota" onsubmit="window.simpanAnggotaDB(event)" class="p-6 space-y-4"><input type="hidden" id="edit-id"><div><label class="text-sm font-semibold">Nama Lengkap</label><input type="text" id="admin-nama" required class="w-full px-4 py-2 border rounded-lg"></div><div class="grid grid-cols-2 gap-4"><div><label class="text-sm font-semibold">Angkatan</label><input type="number" id="admin-angkatan" required class="w-full px-4 py-2 border rounded-lg"></div><div><label class="text-sm font-semibold">No. WA</label><input type="number" id="admin-wa" required class="w-full px-4 py-2 border rounded-lg"></div></div><button type="submit" class="w-full bg-mansabot text-white font-bold py-2 rounded-lg">Simpan Database</button></form></div></div>
-    <!-- MODAL EDIT MERCH -->
     <div id="modalEditMerch" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4"><div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"><div class="bg-gray-800 px-6 py-4 flex justify-between items-center"><h3 class="text-xl font-bold text-white"><i class="fa-solid fa-shirt"></i> Edit</h3><button type="button" onclick="window.closeModalMerch()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div><form onsubmit="window.simpanEditMerch(event)" class="p-6 space-y-4"><input type="hidden" id="edit-merch-id"><input type="text" id="edit-merch-nama" required class="w-full px-4 py-2 border rounded-lg"><input type="text" id="edit-merch-desc" required class="w-full px-4 py-2 border rounded-lg"><input type="text" id="edit-merch-url" required class="w-full px-4 py-2 border rounded-lg"><button type="submit" class="w-full bg-gray-800 text-white font-bold py-2 rounded-lg mt-2">Simpan</button></form></div></div>
-    <!-- MODAL EDIT INV -->
     <div id="modalEditInv" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4"><div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"><div class="bg-indigo-600 px-6 py-4 flex justify-between items-center"><h3 class="text-xl font-bold text-white"><i class="fa-solid fa-box-open"></i> Edit</h3><button type="button" onclick="window.closeModalInv()"><i class="fa-solid fa-xmark text-white text-xl"></i></button></div><form onsubmit="window.simpanEditInventaris(event)" class="p-6 space-y-4"><input type="hidden" id="edit-inv-id"><input type="text" id="edit-inv-nama" required class="w-full px-4 py-2 border rounded-lg"><div class="grid grid-cols-2 gap-4"><input type="number" id="edit-inv-jumlah" required class="w-full px-4 py-2 border rounded-lg"><select id="edit-inv-kondisi" class="w-full px-4 py-2 border rounded-lg bg-white"><option value="Baik">Baik</option><option value="Rusak Ringan">Rusak Ringan</option><option value="Rusak Berat">Rusak Berat</option></select></div><input type="text" id="edit-inv-url" required class="w-full px-4 py-2 border rounded-lg"><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg mt-2">Simpan</button></form></div></div>
 
     <!-- FIREBASE & LOGIC -->
@@ -322,21 +291,43 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // DATA STATE UTK EDIT & RENDER
+        // ==== LOGIC ANIMASI LOTTIE GLOBAL ====
+        window.playLottie = (type, message, onConfirm = null) => {
+            const modal = document.getElementById('modalLottie');
+            const box = document.getElementById('lottieBox');
+            const player = document.getElementById('lottiePlayer');
+            const actions = document.getElementById('lottieActions');
+            document.getElementById('lottieMessage').innerText = message;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
+
+            if (type === 'success') {
+                player.load('https://lottie.host/44b5b790-70f8-4963-9173-4394ab6a5c72/CfuM4EW4ez.json');
+                player.loop = false; player.play(); actions.classList.add('hidden');
+                setTimeout(() => { window.closeLottie(); if(onConfirm) onConfirm(); }, 2500);
+            } else if (type === 'delete') {
+                player.load('https://lottie.host/243c5a05-7c3b-418d-a690-d25233e2d223/uc8P6bRC8a.json');
+                player.loop = true; player.play(); actions.classList.remove('hidden');
+                document.getElementById('lottieConfirmBtn').onclick = () => { window.closeLottie(); if(onConfirm) onConfirm(); };
+            }
+        };
+        window.closeLottie = () => {
+            const modal = document.getElementById('modalLottie');
+            modal.classList.add('opacity-0'); document.getElementById('lottieBox').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
+        // DATA STATE
         let arrAnggota = []; let arrMerch = []; let arrInventaris = []; let arrPrestasi = []; let arrKasAnggota = [];
-        
-        // FUNGSI FORMAT RUPIAH
         const formatRupiah = (angka) => { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
 
-        // SETUP PERIODE KAS AWAL
         const getBulanSekarang = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
         let periodeKasAktif = getBulanSekarang();
         document.getElementById('input-periode-kas').value = periodeKasAktif;
         document.getElementById('input_transaksi_tgl').valueAsDate = new Date();
 
-        // GLOBAL KEUANGAN STATE & LOCK
-        let globalKodeKeuangan = "1234";
-        let isKeuanganUnlocked = false;
+        let globalKodeKeuangan = "1234"; let isKeuanganUnlocked = false;
         let globalTotalKasMurni = 0; let globalTotalUmumMasuk = 0; let globalTotalUmumKeluar = 0;
 
         const hitungStatistikKeuangan = () => {
@@ -347,7 +338,6 @@
             document.getElementById('stat-saldo-akhir').innerText = formatRupiah(saldoAkhir);
         }
 
-        // SYNC PENGATURAN UMUM
         onSnapshot(doc(db, "pengaturan", "umum"), (docSnap) => {
             if (docSnap.exists()) {
                 const d = docSnap.data();
@@ -357,14 +347,10 @@
                 document.getElementById('set-img').value = d.imgHome || ""; document.getElementById('str-pembina').value = d.pembina || "";
                 document.getElementById('str-ketua').value = d.ketua || ""; document.getElementById('str-wakil').value = d.wakil || "";
                 document.getElementById('str-sekre').value = d.sekre || ""; document.getElementById('str-benda').value = d.benda || "";
-                
-                // DATA BGM & GDRIVE
-                document.getElementById('set-bgm').value = d.bgmUrl || "";
-                document.getElementById('set-gdrive').value = d.gdriveUrl || "";
+                document.getElementById('set-bgm').value = d.bgmUrl || ""; document.getElementById('set-gdrive').value = d.gdriveUrl || "";
             }
         });
 
-        // SYNC ANGGOTA
         onSnapshot(collection(db, "anggota"), (snapshot) => {
             const tabel = document.getElementById('tabel-anggota'); tabel.innerHTML = ''; arrAnggota = [];
             let jml = 0, alu = 0; const thn = (new Date().getMonth() >= 6) ? new Date().getFullYear() : new Date().getFullYear() - 1;
@@ -378,13 +364,10 @@
             window.arrAnggotaAktif = arrAnggotaAktif; if(arrKasAnggota.length > 0) window.renderChecklistKas();
         });
 
-        // SYNC LAINNYA
         onSnapshot(collection(db, "divisi"), (snap) => { const c = document.getElementById('list-divisi'); c.innerHTML = ''; snap.forEach(d => c.innerHTML += `<div class="flex gap-4 items-center bg-gray-50 p-4 border rounded-xl"><div class="flex-1"><h4 class="font-bold text-sm">${d.data().namaJabatan}</h4><p class="text-xs text-gray-600">${d.data().namaAnggota}</p></div><button onclick="window.hapusDoc('divisi', '${d.id}')" class="text-red-500 hover:bg-red-100 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div>`); });
         onSnapshot(collection(db, "galeri"), (snap) => { const c = document.getElementById('list-galeri'); c.innerHTML = ''; snap.forEach(d => c.innerHTML += `<div class="relative aspect-square overflow-hidden rounded-lg border bg-gray-100"><img src="${d.data().url}" class="w-full h-full object-cover"><button onclick="window.hapusDoc('galeri', '${d.id}')" class="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-lg text-xs shadow-md hover:bg-red-600"><i class="fa-solid fa-trash"></i></button></div>`); });
         onSnapshot(collection(db, "merch"), (snap) => { const c = document.getElementById('list-merch'); c.innerHTML = ''; arrMerch = []; snap.forEach(d => { arrMerch.push({ id: d.id, ...d.data() }); c.innerHTML += `<div class="flex items-center gap-4 bg-white p-4 rounded-xl border hover:shadow-sm transition"><div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100"><img src="${d.data().url}" class="w-full h-full object-cover"></div><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${d.data().nama}</h4><p class="text-xs text-gray-500 truncate">${d.data().desc}</p></div><div class="flex flex-col gap-1"><button onclick="window.editMerchTrigger('${d.id}')" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('merch', '${d.id}')" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div></div>`; }); });
         onSnapshot(collection(db, "inventaris"), (snap) => { const c = document.getElementById('list-inventaris'); c.innerHTML = ''; arrInventaris = []; snap.forEach(d => { let m = d.data(); arrInventaris.push({ id: d.id, ...m }); c.innerHTML += `<div class="flex items-center gap-4 bg-white p-4 rounded-xl border hover:shadow-sm transition"><div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-indigo-50"><img src="${m.url}" class="w-full h-full object-cover"></div><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${m.nama}</h4><p class="text-xs font-medium text-gray-500">Stok: ${m.jumlah} | <span class="${m.kondisi==='Baik'?'text-green-600':(m.kondisi==='Rusak Ringan'?'text-yellow-600':'text-red-600')}">${m.kondisi}</span></p></div><div class="flex flex-col gap-1"><button onclick="window.editInvTrigger('${d.id}')" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fa-solid fa-pen"></i></button><button onclick="window.hapusDoc('inventaris', '${d.id}')" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fa-solid fa-trash"></i></button></div></div>`; }); });
-
-        // SYNC PRESTASI (DENGAN TOMBOL EDIT)
         onSnapshot(collection(db, "prestasi"), (snap) => { 
             const c = document.getElementById('list-prestasi'); c.innerHTML = ''; arrPrestasi = []; 
             snap.forEach(d => { 
@@ -393,12 +376,7 @@
             }); 
         });
 
-        // SYNC KEUANGAN (KAS & UMUM)
-        onSnapshot(collection(db, "kas_anggota"), (snap) => {
-            arrKasAnggota = []; globalTotalKasMurni = 0;
-            snap.forEach(d => { const data = d.data(); arrKasAnggota.push({id: d.id, ...data}); globalTotalKasMurni += data.nominal; });
-            window.renderChecklistKas(); hitungStatistikKeuangan();
-        });
+        onSnapshot(collection(db, "kas_anggota"), (snap) => { arrKasAnggota = []; globalTotalKasMurni = 0; snap.forEach(d => { const data = d.data(); arrKasAnggota.push({id: d.id, ...data}); globalTotalKasMurni += data.nominal; }); window.renderChecklistKas(); hitungStatistikKeuangan(); });
         window.ubahPeriodeKas = (val) => { if(!val) return; periodeKasAktif = val; window.renderChecklistKas(); };
         window.renderChecklistKas = () => {
             const tbody = document.getElementById('tabel-checklist-kas'); if(!window.arrAnggotaAktif) return; tbody.innerHTML = '';
@@ -426,55 +404,56 @@
             });
             hitungStatistikKeuangan();
         });
-        window.tambahTransaksiUmum = async (e) => { e.preventDefault(); await addDoc(collection(db, "transaksi_umum"), { tanggal: document.getElementById('input_transaksi_tgl').value, keterangan: document.getElementById('input_transaksi_ket').value, jenis: document.getElementById('input_transaksi_jenis').value, nominal: parseInt(document.getElementById('input_transaksi_nominal').value), timestamp: new Date() }); document.getElementById('input_transaksi_ket').value = ''; document.getElementById('input_transaksi_nominal').value = ''; };
+        window.tambahTransaksiUmum = async (e) => { e.preventDefault(); await addDoc(collection(db, "transaksi_umum"), { tanggal: document.getElementById('input_transaksi_tgl').value, keterangan: document.getElementById('input_transaksi_ket').value, jenis: document.getElementById('input_transaksi_jenis').value, nominal: parseInt(document.getElementById('input_transaksi_nominal').value), timestamp: new Date() }); document.getElementById('input_transaksi_ket').value = ''; document.getElementById('input_transaksi_nominal').value = ''; window.playLottie('success', 'Transaksi Ditambahkan!'); };
 
-        // FUNGSI UMUM WRITE FIREBASE
-        window.ubahKodeKunci = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKunci: document.getElementById('input-kode-ubah').value }, { merge: true }); alert("Kode Pendaftaran Diperbarui!"); }
-        window.ubahPINKeuangan = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKeuangan: document.getElementById('input-pin-keuangan-ubah').value }, { merge: true }); alert("PIN Keuangan Diperbarui!"); }
-        window.simpanPengaturanUmum = async (e) => { e.preventDefault(); await setDoc(doc(db, "pengaturan", "umum"), { judulWeb: document.getElementById('set-judul').value, deskripsiWeb: document.getElementById('set-desc').value, imgHome: document.getElementById('set-img').value, bgmUrl: document.getElementById('set-bgm').value, gdriveUrl: document.getElementById('set-gdrive').value }, { merge: true }); alert("Tampilan Utama Disimpan!"); }
-        window.simpanStrukturInti = async () => { await setDoc(doc(db, "pengaturan", "umum"), { pembina: document.getElementById('str-pembina').value, ketua: document.getElementById('str-ketua').value, wakil: document.getElementById('str-wakil').value, sekre: document.getElementById('str-sekre').value, benda: document.getElementById('str-benda').value }, { merge: true }); alert("Struktur Inti Disimpan!"); }
-        window.tambahDivisi = async (e) => { e.preventDefault(); await addDoc(collection(db, "divisi"), { namaJabatan: document.getElementById('div-jabatan').value, namaAnggota: document.getElementById('div-nama').value }); document.getElementById('div-jabatan').value = ''; document.getElementById('div-nama').value = ''; }
-        window.tambahGaleri = async (e) => { e.preventDefault(); await addDoc(collection(db, "galeri"), { url: document.getElementById('input_galeri_url').value }); document.getElementById('input_galeri_url').value = ''; }
-        window.tambahPrestasi = async (e) => { e.preventDefault(); await addDoc(collection(db, "prestasi"), { judul: document.getElementById('input_prestasi_judul').value, desc: document.getElementById('input_prestasi_desc').value, url: document.getElementById('input_prestasi_url').value }); e.target.reset(); }
-        window.tambahMerch = async (e) => { e.preventDefault(); await addDoc(collection(db, "merch"), { nama: document.getElementById('input_merch_nama').value, desc: document.getElementById('input_merch_desc').value, url: document.getElementById('input_merch_url').value }); e.target.reset(); }
-        window.tambahInventaris = async (e) => { e.preventDefault(); await addDoc(collection(db, "inventaris"), { nama: document.getElementById('input_inv_nama').value, jumlah: parseInt(document.getElementById('input_inv_jumlah').value), kondisi: document.getElementById('input_inv_kondisi').value, url: document.getElementById('input_inv_url').value }); e.target.reset(); }
-        window.simpanAnggotaDB = async (e) => { e.preventDefault(); const id = document.getElementById('edit-id').value; const dat = { nama: document.getElementById('admin-nama').value, angkatan: parseInt(document.getElementById('admin-angkatan').value), nohp: document.getElementById('admin-wa').value }; if(id==='') await addDoc(collection(db, "anggota"), dat); else await updateDoc(doc(db, "anggota", id), dat); window.closeModal(); }
-        window.hapusDoc = async (col, id) => { if(confirm("Yakin ingin menghapus data ini secara permanen?")) await deleteDoc(doc(db, col, id)); }
+        // FUNGSI UMUM WRITE FIREBASE DENGAN ANIMASI
+        window.ubahKodeKunci = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKunci: document.getElementById('input-kode-ubah').value }, { merge: true }); window.playLottie('success', 'Kode Pendaftaran Diperbarui!'); }
+        window.ubahPINKeuangan = async () => { await setDoc(doc(db, "pengaturan", "umum"), { kodeKeuangan: document.getElementById('input-pin-keuangan-ubah').value }, { merge: true }); window.playLottie('success', 'PIN Keuangan Diperbarui!'); }
+        window.simpanPengaturanUmum = async (e) => { e.preventDefault(); await setDoc(doc(db, "pengaturan", "umum"), { judulWeb: document.getElementById('set-judul').value, deskripsiWeb: document.getElementById('set-desc').value, imgHome: document.getElementById('set-img').value, bgmUrl: document.getElementById('set-bgm').value, gdriveUrl: document.getElementById('set-gdrive').value }, { merge: true }); window.playLottie('success', 'Tampilan Utama Disimpan!'); }
+        window.simpanStrukturInti = async () => { await setDoc(doc(db, "pengaturan", "umum"), { pembina: document.getElementById('str-pembina').value, ketua: document.getElementById('str-ketua').value, wakil: document.getElementById('str-wakil').value, sekre: document.getElementById('str-sekre').value, benda: document.getElementById('str-benda').value }, { merge: true }); window.playLottie('success', 'Struktur Inti Disimpan!'); }
+        window.tambahDivisi = async (e) => { e.preventDefault(); await addDoc(collection(db, "divisi"), { namaJabatan: document.getElementById('div-jabatan').value, namaAnggota: document.getElementById('div-nama').value }); document.getElementById('div-jabatan').value = ''; document.getElementById('div-nama').value = ''; window.playLottie('success', 'Divisi Berhasil Ditambahkan!'); }
+        window.tambahGaleri = async (e) => { e.preventDefault(); await addDoc(collection(db, "galeri"), { url: document.getElementById('input_galeri_url').value }); document.getElementById('input_galeri_url').value = ''; window.playLottie('success', 'Foto Tersimpan!'); }
+        window.tambahPrestasi = async (e) => { e.preventDefault(); await addDoc(collection(db, "prestasi"), { judul: document.getElementById('input_prestasi_judul').value, desc: document.getElementById('input_prestasi_desc').value, url: document.getElementById('input_prestasi_url').value }); e.target.reset(); window.playLottie('success', 'Prestasi Disimpan!'); }
+        window.tambahMerch = async (e) => { e.preventDefault(); await addDoc(collection(db, "merch"), { nama: document.getElementById('input_merch_nama').value, desc: document.getElementById('input_merch_desc').value, url: document.getElementById('input_merch_url').value }); e.target.reset(); window.playLottie('success', 'Merch Tersimpan!'); }
+        window.tambahInventaris = async (e) => { e.preventDefault(); await addDoc(collection(db, "inventaris"), { nama: document.getElementById('input_inv_nama').value, jumlah: parseInt(document.getElementById('input_inv_jumlah').value), kondisi: document.getElementById('input_inv_kondisi').value, url: document.getElementById('input_inv_url').value }); e.target.reset(); window.playLottie('success', 'Inventaris Tersimpan!'); }
+        window.simpanAnggotaDB = async (e) => { e.preventDefault(); const id = document.getElementById('edit-id').value; const dat = { nama: document.getElementById('admin-nama').value, angkatan: parseInt(document.getElementById('admin-angkatan').value), nohp: document.getElementById('admin-wa').value }; if(id==='') await addDoc(collection(db, "anggota"), dat); else await updateDoc(doc(db, "anggota", id), dat); window.closeModal(); window.playLottie('success', 'Anggota Tersimpan!'); }
         
-        // FUNGSI UI ADMIN
+        // HAPUS DATA DENGAN MODAL LOTTIE
+        window.hapusDoc = (col, id) => { 
+            window.playLottie('delete', 'Yakin menghapus data ini?', async () => {
+                await deleteDoc(doc(db, col, id));
+                window.playLottie('success', 'Data Terhapus!');
+            });
+        }
+        
         window.toggleSidebar = () => { document.getElementById('sidebar').classList.toggle('-translate-x-full'); }
         window.prosesLogin = (e) => { e.preventDefault(); if(document.getElementById('login-username').value==='admin' && document.getElementById('login-password').value==='admin123'){ document.getElementById('login-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('login-screen').style.display='none',500); } else { document.getElementById('login-error').classList.remove('hidden'); setTimeout(()=>document.getElementById('login-error').classList.add('hidden'),3000); } }
         window.logoutAdmin = () => { document.getElementById('form-login').reset(); document.getElementById('login-screen').style.display='flex'; setTimeout(()=>document.getElementById('login-screen').classList.remove('fade-out'),10); window.switchTab('dashboard'); }
         window.switchTab = (id) => { 
-            if(id === 'keuangan' && !isKeuanganUnlocked) {
-                document.getElementById('modalKeuanganLock').classList.remove('hidden'); document.getElementById('modalKeuanganLock').classList.add('flex');
-                document.getElementById('input-pin-bendahara').value = ''; return;
-            }
+            if(id === 'keuangan' && !isKeuanganUnlocked) { document.getElementById('modalKeuanganLock').classList.remove('hidden'); document.getElementById('modalKeuanganLock').classList.add('flex'); document.getElementById('input-pin-bendahara').value = ''; return; }
             document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('bg-mansabot','text-white','shadow-md');b.classList.add('text-gray-600','hover:bg-mansabot-light');}); 
             document.getElementById('tab-'+id).classList.add('active'); let btn=document.getElementById('btn-'+id); btn.classList.remove('text-gray-600','hover:bg-mansabot-light'); btn.classList.add('bg-mansabot','text-white','shadow-md'); 
             if(window.innerWidth < 768) { window.toggleSidebar(); }
         }
 
-        // FUNGSI LOCK KEUANGAN
         window.verifyKeuanganLock = () => { if(document.getElementById('input-pin-bendahara').value === globalKodeKeuangan) { isKeuanganUnlocked = true; document.getElementById('modalKeuanganLock').classList.add('hidden'); document.getElementById('modalKeuanganLock').classList.remove('flex'); window.switchTab('keuangan'); } else { alert("PIN Bendahara Salah!"); } }
         window.closeKeuanganLock = () => { document.getElementById('modalKeuanganLock').classList.add('hidden'); document.getElementById('modalKeuanganLock').classList.remove('flex'); }
 
-        // FUNGSI MODAL CRUD
         window.openModalTambah = () => { document.getElementById('formAdminAnggota').reset(); document.getElementById('edit-id').value = ''; document.getElementById('modal-title').innerText = "Tambah Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); }
         window.closeModal = () => { document.getElementById('modalForm').classList.add('hidden'); document.getElementById('modalForm').classList.remove('flex'); }
         window.editAnggota = (id) => { const m = arrAnggota.find(x => x.id === id); if(m){ document.getElementById('edit-id').value = id; document.getElementById('admin-nama').value = m.nama; document.getElementById('admin-angkatan').value = m.angkatan; document.getElementById('admin-wa').value = m.nohp; document.getElementById('modal-title').innerText = "Edit Anggota"; document.getElementById('modalForm').classList.remove('hidden'); document.getElementById('modalForm').classList.add('flex'); } }
         
         window.closeModalMerch = () => { document.getElementById('modalEditMerch').classList.add('hidden'); document.getElementById('modalEditMerch').classList.remove('flex'); }
         window.editMerchTrigger = (id) => { const data = arrMerch.find(x => x.id === id); if(data) { document.getElementById('edit-merch-id').value = id; document.getElementById('edit-merch-nama').value = data.nama; document.getElementById('edit-merch-desc').value = data.desc; document.getElementById('edit-merch-url').value = data.url; document.getElementById('modalEditMerch').classList.remove('hidden'); document.getElementById('modalEditMerch').classList.add('flex'); } }
-        window.simpanEditMerch = async (e) => { e.preventDefault(); const id = document.getElementById('edit-merch-id').value; await updateDoc(doc(db, "merch", id), { nama: document.getElementById('edit-merch-nama').value, desc: document.getElementById('edit-merch-desc').value, url: document.getElementById('edit-merch-url').value }); window.closeModalMerch(); }
+        window.simpanEditMerch = async (e) => { e.preventDefault(); const id = document.getElementById('edit-merch-id').value; await updateDoc(doc(db, "merch", id), { nama: document.getElementById('edit-merch-nama').value, desc: document.getElementById('edit-merch-desc').value, url: document.getElementById('edit-merch-url').value }); window.closeModalMerch(); window.playLottie('success', 'Perubahan Disimpan!'); }
         
         window.closeModalInv = () => { document.getElementById('modalEditInv').classList.add('hidden'); document.getElementById('modalEditInv').classList.remove('flex'); }
         window.editInvTrigger = (id) => { const data = arrInventaris.find(x => x.id === id); if(data) { document.getElementById('edit-inv-id').value = id; document.getElementById('edit-inv-nama').value = data.nama; document.getElementById('edit-inv-jumlah').value = data.jumlah; document.getElementById('edit-inv-kondisi').value = data.kondisi; document.getElementById('edit-inv-url').value = data.url; document.getElementById('modalEditInv').classList.remove('hidden'); document.getElementById('modalEditInv').classList.add('flex'); } }
-        window.simpanEditInventaris = async (e) => { e.preventDefault(); const id = document.getElementById('edit-inv-id').value; await updateDoc(doc(db, "inventaris", id), { nama: document.getElementById('edit-inv-nama').value, jumlah: parseInt(document.getElementById('edit-inv-jumlah').value), kondisi: document.getElementById('edit-inv-kondisi').value, url: document.getElementById('edit-inv-url').value }); window.closeModalInv(); }
+        window.simpanEditInventaris = async (e) => { e.preventDefault(); const id = document.getElementById('edit-inv-id').value; await updateDoc(doc(db, "inventaris", id), { nama: document.getElementById('edit-inv-nama').value, jumlah: parseInt(document.getElementById('edit-inv-jumlah').value), kondisi: document.getElementById('edit-inv-kondisi').value, url: document.getElementById('edit-inv-url').value }); window.closeModalInv(); window.playLottie('success', 'Perubahan Disimpan!'); }
 
         window.closeModalPrestasi = () => { document.getElementById('modalEditPrestasi').classList.add('hidden'); document.getElementById('modalEditPrestasi').classList.remove('flex'); }
         window.editPrestasiTrigger = (id) => { const data = arrPrestasi.find(x => x.id === id); if(data) { document.getElementById('edit-prestasi-id').value = id; document.getElementById('edit-prestasi-judul').value = data.judul; document.getElementById('edit-prestasi-desc').value = data.desc; document.getElementById('edit-prestasi-url').value = data.url; document.getElementById('modalEditPrestasi').classList.remove('hidden'); document.getElementById('modalEditPrestasi').classList.add('flex'); } }
-        window.simpanEditPrestasi = async (e) => { e.preventDefault(); const id = document.getElementById('edit-prestasi-id').value; await updateDoc(doc(db, "prestasi", id), { judul: document.getElementById('edit-prestasi-judul').value, desc: document.getElementById('edit-prestasi-desc').value, url: document.getElementById('edit-prestasi-url').value }); window.closeModalPrestasi(); }
+        window.simpanEditPrestasi = async (e) => { e.preventDefault(); const id = document.getElementById('edit-prestasi-id').value; await updateDoc(doc(db, "prestasi", id), { judul: document.getElementById('edit-prestasi-judul').value, desc: document.getElementById('edit-prestasi-desc').value, url: document.getElementById('edit-prestasi-url').value }); window.closeModalPrestasi(); window.playLottie('success', 'Perubahan Disimpan!'); }
     </script>
 </body>
 </html>
